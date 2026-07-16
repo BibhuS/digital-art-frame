@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowUpRight,
+  BookOpen,
+  Command as CommandIcon,
   Download,
   Github,
   Linkedin,
@@ -10,6 +12,14 @@ import {
   Phone,
 } from "lucide-react";
 import resumeAsset from "@/assets/resume.pdf.asset.json";
+import { HeroCanvas } from "@/components/hero-canvas";
+import { CommandPalette } from "@/components/command-palette";
+import {
+  BLOG_POSTS,
+  PROJECTS,
+  PROJECT_TECH_FILTERS,
+  SOCIAL,
+} from "@/lib/portfolio-data";
 
 export const Route = createFileRoute("/")({
   component: Portfolio,
@@ -20,6 +30,7 @@ const NAV = [
   { href: "#skills", label: "Skills" },
   { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
+  { href: "/blog", label: "Blog", route: true },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -154,52 +165,23 @@ const EXPERIENCE = [
   },
 ];
 
-const PROJECTS = [
-  {
-    title: "OSKAR — Client Onboarding Analytics",
-    client: "JP Morgan Chase",
-    tag: "Databricks · Medallion · AWS",
-    body: "Reengineered legacy ETL onto Databricks with Bronze/Silver/Gold Delta layers, hybrid pipelines for restricted geographies, and Python-based reconciliation across source and lakehouse.",
-  },
-  {
-    title: "Investment Banking Datamart",
-    client: "Barclays",
-    tag: "AWS Glue · Step Functions · Redshift",
-    body: "PySpark pipelines on Glue orchestrated by Step Functions with DynamoDB metadata. CloudFormation-driven infra, Lambda + EventBridge automation, curated Redshift marts feeding dashboards.",
-  },
-  {
-    title: "Insurance Lakehouse on Databricks",
-    client: "Travelers Insurance",
-    tag: "PySpark · Databricks · Athena",
-    body: "SIP ingestion landing to S3, parsed via PySpark on Databricks into Glue tables queried through Athena. CI/CD via Jenkins with Terraform orchestration.",
-  },
-  {
-    title: "IoT Streaming Platform",
-    client: "MITIE Mozaic",
-    tag: "Streamsets · Kafka · Python API",
-    body: "End-to-end IoT streaming from sensors through Streamsets into Kafka, with Python REST APIs powering user dashboards and re-processing tooling for missed data.",
-  },
-  {
-    title: "Real-time Airline Data Pipeline",
-    client: "Sabre",
-    tag: "Spark Streaming · Scala · Oozie",
-    body: "Spark Streaming consumer on Kafka Direct API, custom Flume EBCDIC→ASCII interceptor, and Oozie Coordinators/Bundles automating batch and streaming across the Hadoop cluster.",
-  },
-  {
-    title: "Transactional Text Analytics",
-    client: "Sabre @ Dell",
-    tag: "Sqoop · UIMA · HBase",
-    body: "Sqoop ingestion from SQL Server to HDFS, Apache UIMA + Java annotation, HBase JSON store feeding pattern mining, rule engine, predictive scoring and offer rotation.",
-  },
-];
-
 function Portfolio() {
   useEffect(() => {
     document.documentElement.classList.add("dark");
   }, []);
 
+  const [filter, setFilter] = useState<string>("All");
+  const filteredProjects = useMemo(
+    () =>
+      filter === "All"
+        ? PROJECTS
+        : PROJECTS.filter((p) => p.tech.includes(filter)),
+    [filter],
+  );
+
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
+      <CommandPalette />
       {/* Ambient background */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-primary/15 blur-[140px]" />
@@ -224,30 +206,62 @@ function Portfolio() {
             <span className="hidden sm:inline text-foreground/90">bibhu.dev</span>
           </a>
           <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
-            {NAV.map((n) => (
-              <a
-                key={n.href}
-                href={n.href}
-                className="transition-colors hover:text-foreground"
-              >
-                {n.label}
-              </a>
-            ))}
+            {NAV.map((n) =>
+              n.route ? (
+                <Link
+                  key={n.href}
+                  to={n.href}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {n.label}
+                </Link>
+              ) : (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  className="transition-colors hover:text-foreground"
+                >
+                  {n.label}
+                </a>
+              ),
+            )}
           </nav>
-          <a
-            href={resumeAsset.url}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20"
-          >
-            <Download className="h-3.5 w-3.5" /> Resume
-          </a>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                const ev = new KeyboardEvent("keydown", {
+                  key: "k",
+                  metaKey: true,
+                  ctrlKey: true,
+                  bubbles: true,
+                });
+                document.dispatchEvent(ev);
+              }}
+              className="hidden items-center gap-1.5 rounded-md border border-border bg-background/40 px-2.5 py-1.5 text-xs text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:inline-flex"
+              aria-label="Open command palette"
+            >
+              <CommandIcon className="h-3.5 w-3.5" />
+              <span className="font-mono">⌘K</span>
+            </button>
+            <a
+              href={resumeAsset.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20"
+            >
+              <Download className="h-3.5 w-3.5" /> Resume
+            </a>
+          </div>
         </div>
       </header>
 
       <main id="top" className="mx-auto max-w-6xl px-6">
         {/* Hero */}
-        <section className="pt-24 pb-24 md:pt-32 md:pb-32">
+        <section className="relative pt-24 pb-24 md:pt-32 md:pb-32">
+          <div className="pointer-events-auto absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
+            <HeroCanvas />
+          </div>
           <div className="flex items-center gap-2 text-xs font-mono text-primary">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
             AVAILABLE · 1 MONTH NOTICE
@@ -270,16 +284,16 @@ function Portfolio() {
               <MapPin className="h-4 w-4" /> United Kingdom
             </span>
             <a
-              href="mailto:bibhuhadoop2016@gmail.com"
+              href={`mailto:${SOCIAL.email}`}
               className="inline-flex items-center gap-1.5 transition hover:text-foreground"
             >
-              <Mail className="h-4 w-4" /> bibhuhadoop2016@gmail.com
+              <Mail className="h-4 w-4" /> {SOCIAL.email}
             </a>
             <a
-              href="tel:+447867211118"
+              href={`tel:${SOCIAL.phone}`}
               className="inline-flex items-center gap-1.5 transition hover:text-foreground"
             >
-              <Phone className="h-4 w-4" /> +44 7867 211118
+              <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
             </a>
           </div>
 
@@ -297,6 +311,30 @@ function Portfolio() {
               className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
             >
               <Download className="h-4 w-4" /> Download resume
+            </a>
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
+            >
+              <BookOpen className="h-4 w-4" /> Read the blog
+            </Link>
+            <a
+              href={SOCIAL.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub"
+              className="inline-flex items-center justify-center rounded-md border border-border bg-card/50 p-2.5 text-foreground transition hover:border-primary/40"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href={SOCIAL.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="inline-flex items-center justify-center rounded-md border border-border bg-card/50 p-2.5 text-foreground transition hover:border-primary/40"
+            >
+              <Linkedin className="h-4 w-4" />
             </a>
           </div>
 
@@ -427,10 +465,29 @@ function Portfolio() {
 
         {/* Projects */}
         <Section id="projects" label="04" title="Selected Projects">
+          <div className="mb-8 flex flex-wrap gap-2">
+            {PROJECT_TECH_FILTERS.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setFilter(t)}
+                className={
+                  "rounded-full border px-3 py-1 text-xs transition " +
+                  (filter === t
+                    ? "border-primary bg-primary/15 text-primary"
+                    : "border-border/60 text-muted-foreground hover:border-primary/30 hover:text-foreground")
+                }
+              >
+                {t}
+              </button>
+            ))}
+          </div>
           <div className="grid gap-5 md:grid-cols-2">
-            {PROJECTS.map((p) => (
-              <article
+            {filteredProjects.map((p) => (
+              <Link
                 key={p.title}
+                to="/projects/$slug"
+                params={{ slug: p.slug }}
                 className="group relative overflow-hidden rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
               >
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition group-hover:opacity-100" />
@@ -451,13 +508,53 @@ function Portfolio() {
                 <div className="mt-5 inline-flex rounded-md border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
                   {p.tag}
                 </div>
-              </article>
+              </Link>
             ))}
+          </div>
+          {filteredProjects.length === 0 && (
+            <div className="rounded-xl border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
+              No projects match that filter yet.
+            </div>
+          )}
+        </Section>
+
+        {/* Blog preview */}
+        <Section id="writing" label="05" title="From the blog">
+          <div className="grid gap-5 md:grid-cols-3">
+            {BLOG_POSTS.map((p) => (
+              <Link
+                key={p.slug}
+                to="/blog/$slug"
+                params={{ slug: p.slug }}
+                className="group rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
+              >
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="font-mono uppercase tracking-widest text-primary">
+                    {p.tag}
+                  </span>
+                  <span>{p.readingMinutes} min</span>
+                </div>
+                <h3 className="mt-3 text-lg font-semibold text-foreground group-hover:text-primary">
+                  {p.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {p.excerpt}
+                </p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8">
+            <Link
+              to="/blog"
+              className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent"
+            >
+              All posts <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </Section>
 
         {/* Contact */}
-        <Section id="contact" label="05" title="Get in touch">
+        <Section id="contact" label="06" title="Get in touch">
           <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
             <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
               Building something data-heavy?
@@ -468,7 +565,7 @@ function Portfolio() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="mailto:bibhuhadoop2016@gmail.com"
+                href={`mailto:${SOCIAL.email}`}
                 className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
               >
                 <Mail className="h-4 w-4" /> Say hello
@@ -484,19 +581,19 @@ function Portfolio() {
             </div>
             <div className="mt-10 flex flex-wrap gap-6 border-t border-border/60 pt-6 text-sm text-muted-foreground">
               <a
-                href="mailto:bibhuhadoop2016@gmail.com"
+                href={`mailto:${SOCIAL.email}`}
                 className="inline-flex items-center gap-2 transition hover:text-foreground"
               >
-                <Mail className="h-4 w-4" /> bibhuhadoop2016@gmail.com
+                <Mail className="h-4 w-4" /> {SOCIAL.email}
               </a>
               <a
-                href="tel:+447867211118"
+                href={`tel:${SOCIAL.phone}`}
                 className="inline-flex items-center gap-2 transition hover:text-foreground"
               >
-                <Phone className="h-4 w-4" /> +44 7867 211118
+                <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
               </a>
               <a
-                href="https://www.linkedin.com/"
+                href={SOCIAL.linkedin}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 transition hover:text-foreground"
@@ -504,7 +601,7 @@ function Portfolio() {
                 <Linkedin className="h-4 w-4" /> LinkedIn
               </a>
               <a
-                href="https://github.com/"
+                href={SOCIAL.github}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 transition hover:text-foreground"

@@ -35,10 +35,26 @@ jobs:
       - name: Prepare Pages output
         run: |
           # Nitro static preset outputs to .output/public
-          if [ -d ".output/public" ]; then
-            cp .output/public/index.html .output/public/404.html || true
-            echo "" > .output/public/.nojekyll
+          PUBLIC_DIR=".output/public"
+
+          if [ ! -d "$PUBLIC_DIR" ]; then
+            echo "Expected $PUBLIC_DIR to exist after static build. Listing .output:"
+            find .output -maxdepth 2 -type d || true
+            exit 1
           fi
+
+          # SPA fallback: GitHub Pages serves 404.html when a route has no file.
+          cp "$PUBLIC_DIR/index.html" "$PUBLIC_DIR/404.html"
+
+          # Also copy index.html into each route directory so direct links
+          # (e.g. /blog/slug) work without hitting the 404 fallback.
+          for route in /blog /projects; do
+            mkdir -p "$PUBLIC_DIR$route"
+            cp "$PUBLIC_DIR/index.html" "$PUBLIC_DIR$route/index.html"
+          done
+
+          # Disable Jekyll so files/folders starting with _ are served as-is.
+          echo "" > "$PUBLIC_DIR/.nojekyll"
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -118,7 +118,7 @@ export function OrbitAvatar() {
       <div className="absolute inset-[14%]">
         <Ring
           items={RING_INNER}
-          radiusPct={50}
+          radiusPct={46}
           duration={24}
           chipClass="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10"
         />
@@ -126,7 +126,7 @@ export function OrbitAvatar() {
       <div className="absolute inset-[2%]">
         <Ring
           items={RING_OUTER}
-          radiusPct={50}
+          radiusPct={48}
           duration={38}
           reverse
           chipClass="h-9 w-9 sm:h-10 sm:w-10 md:h-11 md:w-11"

@@ -267,7 +267,7 @@ function Portfolio() {
             <HeroCanvas />
           </div>
           <div className="grid items-center gap-10 lg:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
-          <div className="order-2 lg:order-1 min-w-0">
+          <div className="order-1 min-w-0">
           <div className="flex items-center gap-2 text-xs font-mono text-primary">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
             AVAILABLE · 1 MONTH NOTICE
@@ -345,7 +345,7 @@ function Portfolio() {
             </a>
           </div>
           </div>
-          <div className="order-1 lg:order-2 w-full">
+          <div className="order-2 w-full">
             <OrbitAvatar />
           </div>
           </div>

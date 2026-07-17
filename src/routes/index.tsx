@@ -14,6 +14,7 @@ import {
 import resumeAsset from "@/assets/resume.pdf.asset.json";
 import { HeroCanvas } from "@/components/hero-canvas";
 import { OrbitAvatar } from "@/components/orbit-avatar";
+import { RotatingRole } from "@/components/rotating-role";
 import { CommandPalette } from "@/components/command-palette";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -278,6 +279,7 @@ function Portfolio() {
               Sinha.
             </span>
           </h1>
+          <RotatingRole />
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
             Senior Data Engineer with{" "}
             <span className="text-foreground">13+ years</span> building Spark,

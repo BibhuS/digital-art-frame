@@ -63,6 +63,7 @@ jobs:
 
           # GitHub Pages is static-only. This app has no server functions, so we
           # serve a small SPA shell that loads the compiled TanStack client app.
+          # Assets are prefixed with BASE_PATH because project pages live under /<repo>/.
           cat > "$PUBLIC_DIR/index.html" <<EOF
           <!doctype html>
           <html lang="en">
@@ -75,8 +76,8 @@ jobs:
               <meta property="og:description" content="13+ years engineering Spark, Databricks and cloud data pipelines across banking, insurance and IoT." />
               <meta property="og:type" content="website" />
               <meta name="twitter:card" content="summary_large_image" />
-              <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-              <link rel="stylesheet" href="/assets/$STYLES_CSS" />
+              <link rel="icon" href="${BASE_PATH}favicon.ico" type="image/x-icon" />
+              <link rel="stylesheet" href="${BASE_PATH}assets/$STYLES_CSS" />
               <script>
                 (function() {
                   try {
@@ -88,7 +89,7 @@ jobs:
               </script>
             </head>
             <body>
-              <script type="module" src="/assets/$INDEX_JS"></script>
+              <script type="module" src="${BASE_PATH}assets/$INDEX_JS"></script>
             </body>
           </html>
           EOF

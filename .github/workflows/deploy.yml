@@ -52,57 +52,58 @@ jobs:
             exit 1
           fi
 
-          INDEX_JS="$(basename "$(ls "$PUBLIC_DIR"/assets/index-*.js | head -n 1)")"
-          STYLES_CSS="$(basename "$(ls "$PUBLIC_DIR"/assets/styles-*.css | head -n 1)")"
+          # GitHub Pages is static-only, but TanStack Router's client needs the
+          # SSR hydration data that the server build injects. Render static HTML
+          # from the built server instead of hand-writing a blank SPA shell.
+          cat > /tmp/render-pages.mjs <<'EOF'
+          import { mkdir, writeFile } from "node:fs/promises";
+          import path from "node:path";
 
-          if [ -z "$INDEX_JS" ] || [ -z "$STYLES_CSS" ]; then
-            echo "Could not find expected client assets in $PUBLIC_DIR/assets"
-            ls -la "$PUBLIC_DIR/assets" || true
-            exit 1
-          fi
+          const publicDir = process.env.PUBLIC_DIR;
+          const basePath = process.env.BASE_PATH || "/";
+          const baseNoSlash = basePath === "/" ? "" : basePath.replace(/\/$/, "");
+          const origin = "https://bibhus.github.io";
+          const routes = ["/", "/blog", "/projects"];
+          const serverEntry = await import(path.resolve(".output/server/index.mjs"));
+          const handler = serverEntry.default ?? serverEntry;
+          const ctx = { waitUntil() {}, passThroughOnException() {} };
 
-          # GitHub Pages is static-only. This app has no server functions, so we
-          # serve a small SPA shell that loads the compiled TanStack client app.
-          # Assets are prefixed with BASE_PATH because project pages live under /<repo>/.
-          cat > "$PUBLIC_DIR/index.html" <<EOF
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <meta charset="utf-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1" />
-              <title>Bibhu Bhushan Sinha — Senior Data Engineer</title>
-              <meta name="description" content="Portfolio of Bibhu Bhushan Sinha, Senior Data Engineer with 13+ years building Spark, Databricks, and cloud data platforms." />
-              <meta property="og:title" content="Bibhu Bhushan Sinha — Senior Data Engineer" />
-              <meta property="og:description" content="13+ years engineering Spark, Databricks and cloud data pipelines across banking, insurance and IoT." />
-              <meta property="og:type" content="website" />
-              <meta name="twitter:card" content="summary_large_image" />
-              <link rel="icon" href="${BASE_PATH}favicon.ico" type="image/x-icon" />
-              <link rel="stylesheet" href="${BASE_PATH}assets/$STYLES_CSS" />
-              <script>
-                (function() {
-                  try {
-                    const saved = localStorage.getItem('theme');
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    document.documentElement.classList.toggle('dark', saved ? saved === 'dark' : prefersDark);
-                  } catch (e) {}
-                })();
-              </script>
-            </head>
-            <body>
-              <script type="module" src="${BASE_PATH}assets/$INDEX_JS"></script>
-            </body>
-          </html>
+          function withBase(route) {
+            return `${baseNoSlash}${route === "/" ? "/" : route}`;
+          }
+
+          function fixRootAssetUrls(html) {
+            return html
+              .replace(/(href|src)="\/(assets\/)/g, `$1="${basePath}$2`)
+              .replace(/href="\/favicon\.ico"/g, `href="${basePath}favicon.ico"`);
+          }
+
+          async function render(route) {
+            const response = await handler.fetch(
+              new Request(`${origin}${withBase(route)}`),
+              {},
+              ctx,
+            );
+            if (!response.ok) {
+              throw new Error(`Failed to render ${route}: ${response.status}`);
+            }
+
+            const html = fixRootAssetUrls(await response.text());
+            const outputDir = route === "/" ? publicDir : path.join(publicDir, route.slice(1));
+            await mkdir(outputDir, { recursive: true });
+            await writeFile(path.join(outputDir, "index.html"), html);
+
+            if (route === "/") {
+              await writeFile(path.join(publicDir, "404.html"), html);
+            }
+          }
+
+          for (const route of routes) {
+            await render(route);
+          }
           EOF
 
-          # SPA fallback: GitHub Pages serves 404.html when a route has no file.
-          cp "$PUBLIC_DIR/index.html" "$PUBLIC_DIR/404.html"
-
-          # Also copy index.html into each route directory so direct links
-          # (e.g. /blog/slug) work without hitting the 404 fallback.
-          for route in /blog /projects; do
-            mkdir -p "$PUBLIC_DIR$route"
-            cp "$PUBLIC_DIR/index.html" "$PUBLIC_DIR$route/index.html"
-          done
+          PUBLIC_DIR="$PUBLIC_DIR" BASE_PATH="$BASE_PATH" node /tmp/render-pages.mjs
 
           # Disable Jekyll so files/folders starting with _ are served as-is.
           echo "" > "$PUBLIC_DIR/.nojekyll"

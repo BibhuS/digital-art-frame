@@ -3,27 +3,35 @@ import { Moon, Sun } from "lucide-react";
 
 const STORAGE_KEY = "theme";
 
-function getInitialIsDark() {
-  if (typeof document === "undefined") return false;
-  return document.documentElement.classList.contains("dark");
-}
-
 export function ThemeToggle() {
-  const [isDark, setIsDark] = useState(getInitialIsDark);
+  // Keep the server render and the first client render identical. The real
+  // theme is applied before paint by the root script, then reflected here after
+  // hydration to avoid React hydration mismatches.
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
-    // When the user hasn't set a manual preference, follow the system scheme.
-    const applySystem = () => {
-      if (localStorage.getItem(STORAGE_KEY) !== null) return;
-      const next = media.matches;
+    const getNextTheme = () => {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? saved === "dark" : media.matches;
+    };
+
+    const applyTheme = () => {
+      const next = getNextTheme();
       setIsDark(next);
       root.classList.toggle("dark", next);
     };
 
-    applySystem();
+    applyTheme();
+
+    // When the user hasn't set a manual preference, follow the system scheme.
+    const applySystem = () => {
+      if (localStorage.getItem(STORAGE_KEY) !== null) return;
+      applyTheme();
+    };
+
     media.addEventListener("change", applySystem);
     return () => media.removeEventListener("change", applySystem);
   }, []);

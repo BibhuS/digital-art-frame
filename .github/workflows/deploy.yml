@@ -27,22 +27,22 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Compute base path
+      - name: Build
         run: |
           REPO_NAME="${{ github.event.repository.name }}"
           if [[ "$REPO_NAME" == *.github.io ]]; then
-            echo "BASE_PATH=/" >> "$GITHUB_ENV"
+            export GITHUB_PAGES_BASE="/"
           else
-            echo "BASE_PATH=/${REPO_NAME}/" >> "$GITHUB_ENV"
+            export GITHUB_PAGES_BASE="/${REPO_NAME}/"
           fi
-
-      - name: Build
-        run: bun run build
-        env:
-          GITHUB_PAGES_BASE: ${{ env.BASE_PATH }}
+          echo "Using base: $GITHUB_PAGES_BASE"
+          echo "GITHUB_PAGES_BASE=$GITHUB_PAGES_BASE" >> "$GITHUB_ENV"
+          bun run build
 
       - name: Prepare Pages output
         run: |
+          BASE_PATH="${GITHUB_PAGES_BASE:-/}"
+          echo "Base path: $BASE_PATH"
           # TanStack Start's production build writes browser assets here.
           PUBLIC_DIR=".output/public"
 

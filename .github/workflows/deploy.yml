@@ -106,7 +106,7 @@ jobs:
           }
           EOF
 
-          PUBLIC_DIR="$PUBLIC_DIR" BASE_PATH="$BASE_PATH" node /tmp/render-pages.mjs
+          PUBLIC_DIR="$PUBLIC_DIR" BASE_PATH="$BASE_PATH" PAGES_ORIGIN="$PAGES_ORIGIN" node /tmp/render-pages.mjs
 
           # Disable Jekyll so files/folders starting with _ are served as-is.
           echo "" > "$PUBLIC_DIR/.nojekyll"

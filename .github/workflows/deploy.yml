@@ -62,7 +62,7 @@ jobs:
           const publicDir = process.env.PUBLIC_DIR;
           const basePath = process.env.BASE_PATH || "/";
           const origin = "https://bibhus.github.io";
-          const routes = ["/", "/blog", "/projects"];
+          const routes = ["/", "/blog"];
           const serverEntry = await import(path.resolve(".output/server/index.mjs"));
           const handler = serverEntry.default ?? serverEntry;
           const ctx = { waitUntil() {}, passThroughOnException() {} };

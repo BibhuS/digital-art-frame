@@ -75,7 +75,7 @@ jobs:
           }
 
           async function render(route) {
-            const requestPath = basePath === "/" ? route : `${baseNoSlash}${route === "/" ? "" : route}`;
+            const requestPath = basePath === "/" ? route : `${baseNoSlash}${route}`;
             const response = await handler.fetch(
               new Request(`${origin}${requestPath}`),
               {},

@@ -589,63 +589,65 @@ function Portfolio() {
         </Reveal>
 
         {/* Contact */}
-        <Section id="contact" label="06" title="Get in touch">
-          <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
-            <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Building something data-heavy?
-            </h3>
-            <p className="mt-3 max-w-xl text-muted-foreground">
-              Happy to chat about Spark, Databricks, lakehouses, streaming, or
-              your next data platform.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={`mailto:${SOCIAL.email}`}
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-              >
-                <Mail className="h-4 w-4" /> Say hello
-              </a>
-              <a
-                href={resumeAsset.url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40"
-              >
-                <Download className="h-4 w-4" /> Resume (PDF)
-              </a>
+        <Reveal delay={80}>
+          <Section id="contact" label="06" title="Get in touch">
+            <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
+              <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                Building something data-heavy?
+              </h3>
+              <p className="mt-3 max-w-xl text-muted-foreground">
+                Happy to chat about Spark, Databricks, lakehouses, streaming, or
+                your next data platform.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={`mailto:${SOCIAL.email}`}
+                  className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+                >
+                  <Mail className="h-4 w-4" /> Say hello
+                </a>
+                <a
+                  href={resumeAsset.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40"
+                >
+                  <Download className="h-4 w-4" /> Resume (PDF)
+                </a>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-6 border-t border-border/60 pt-6 text-sm text-muted-foreground">
+                <a
+                  href={`mailto:${SOCIAL.email}`}
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Mail className="h-4 w-4" /> {SOCIAL.email}
+                </a>
+                <a
+                  href={`tel:${SOCIAL.phone}`}
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
+                </a>
+                <a
+                  href={SOCIAL.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Linkedin className="h-4 w-4" /> LinkedIn
+                </a>
+                <a
+                  href={SOCIAL.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Github className="h-4 w-4" /> GitHub
+                </a>
+              </div>
             </div>
-            <div className="mt-10 flex flex-wrap gap-6 border-t border-border/60 pt-6 text-sm text-muted-foreground">
-              <a
-                href={`mailto:${SOCIAL.email}`}
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Mail className="h-4 w-4" /> {SOCIAL.email}
-              </a>
-              <a
-                href={`tel:${SOCIAL.phone}`}
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
-              </a>
-              <a
-                href={SOCIAL.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </a>
-              <a
-                href={SOCIAL.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Github className="h-4 w-4" /> GitHub
-              </a>
-            </div>
-          </div>
-        </Section>
+          </Section>
+        </Reveal>
 
         <footer className="border-t border-border/60 py-8 text-xs text-muted-foreground">
           <div className="flex flex-wrap items-center justify-between gap-2">

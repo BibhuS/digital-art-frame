@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import { getProject, PROJECTS, type Project } from "@/lib/portfolio-data";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
@@ -38,9 +38,6 @@ function FallbackMissing({ message }: { message: string }) {
 
 function ProjectPage() {
   const { project } = Route.useLoaderData() as { project: Project };
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
 
   const others = PROJECTS.filter((p) => p.slug !== project.slug).slice(0, 3);
 
@@ -55,9 +52,12 @@ function ProjectPage() {
           <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> Back
           </Link>
-          <span className="font-mono text-xs text-muted-foreground">
-            {project.client}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs text-muted-foreground">
+              {project.client}
+            </span>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 

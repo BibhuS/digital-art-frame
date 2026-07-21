@@ -17,6 +17,11 @@ import { OrbitAvatar } from "@/components/orbit-avatar";
 import { RotatingRole } from "@/components/rotating-role";
 import { CommandPalette } from "@/components/command-palette";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Reveal } from "@/components/reveal";
+import { AnimatedCounter } from "@/components/animated-counter";
+import { BackToTop } from "@/components/back-to-top";
+import { MobileNav } from "@/components/mobile-nav";
+import { SiteFooter } from "@/components/site-footer";
 import {
   BLOG_POSTS,
   PROJECTS,

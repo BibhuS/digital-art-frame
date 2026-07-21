@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { BLOG_POSTS, getPost, type BlogPost } from "@/lib/portfolio-data";
 import { ReadingProgress, renderMarkdown } from "@/components/reading-progress";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -35,7 +36,6 @@ export const Route = createFileRoute("/blog/$slug")({
 function PostPage() {
   const { post } = Route.useLoaderData() as { post: BlogPost };
   useEffect(() => {
-    document.documentElement.classList.add("dark");
     window.scrollTo(0, 0);
   }, [post.slug]);
 
@@ -50,9 +50,12 @@ function PostPage() {
           <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> All posts
           </Link>
-          <span className="font-mono text-xs text-muted-foreground">
-            {post.readingMinutes} min read
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs text-muted-foreground">
+              {post.readingMinutes} min read
+            </span>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 

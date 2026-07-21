@@ -19,9 +19,6 @@ export function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-[1fr_auto]">
           <div>
             <div className="flex items-center gap-2 font-mono text-sm tracking-tight">
-              <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
-                &lt;/&gt;
-              </span>
               <span className="text-foreground/90">Bibhu Bhushan Sinha</span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">

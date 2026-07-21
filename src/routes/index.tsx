@@ -203,9 +203,6 @@ function Portfolio() {
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
           <a href="#top" className="flex items-center gap-2 font-mono text-sm tracking-tight">
-            <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
-              &lt;/&gt;
-            </span>
             <span className="hidden sm:inline text-foreground/90">Bibhu Bhushan Sinha</span>
           </a>
           <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">

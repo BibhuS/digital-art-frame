@@ -285,10 +285,15 @@ function Portfolio() {
           </h1>
           <RotatingRole />
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            Senior Data Engineer with{" "}
-            <span className="text-foreground">13+ years</span> building Spark,
-            Databricks and cloud lakehouse platforms across banking, insurance
-            and IoT.
+            Data Engineer & Architect with 13+ years turning complex, messy
+            data into scalable, cloud-native platforms. I specialize in
+            Databricks, Spark, AWS, Snowflake, and modern lakehouse
+            architectures—building reliable pipelines, optimizing distributed
+            workloads, and designing systems that scale with confidence. I enjoy
+            taking ownership of the entire data lifecycle, from architecture
+            and engineering to performance tuning and automation, and sharing
+            my knowledge through technical blogs, architecture diagrams, and
+            hands-on projects.
           </p>
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">

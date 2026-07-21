@@ -275,7 +275,7 @@ function Portfolio() {
             >
               <Download className="h-3.5 w-3.5" /> Resume
             </a>
-            <MobileNav />
+            <MobileNav activeId={activeId} />
           </div>
         </div>
       </header>

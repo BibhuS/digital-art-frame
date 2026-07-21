@@ -266,7 +266,7 @@ function Portfolio() {
           <div className="order-1 min-w-0">
           <div className="flex items-center gap-2 text-xs font-mono text-primary">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-            AVAILABLE · 1 MONTH NOTICE
+            AVAILABLE
           </div>
           <h1 className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
             Bibhu Bhushan
@@ -569,7 +569,7 @@ function Portfolio() {
             </h3>
             <p className="mt-3 max-w-xl text-muted-foreground">
               Happy to chat about Spark, Databricks, lakehouses, streaming, or
-              your next data platform. Currently on 1 month notice.
+              your next data platform.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a

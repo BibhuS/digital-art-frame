@@ -376,7 +376,7 @@ function Portfolio() {
 
         {/* About */}
         <Reveal>
-          <Section id="about" label="01" title="About">
+          <Section id="about" title="About">
             <div className="grid gap-10 md:grid-cols-3">
               <div className="space-y-4 md:col-span-2 text-muted-foreground leading-relaxed">
                 <p>
@@ -428,7 +428,7 @@ function Portfolio() {
 
         {/* Skills */}
         <Reveal delay={80}>
-          <Section id="skills" label="02" title="Skills & Toolkit">
+          <Section id="skills" title="Skills & Toolkit">
             <div className="grid gap-4 md:grid-cols-2">
               {SKILLS.map((s, idx) => (
                 <Reveal key={s.group} delay={idx * 60}>
@@ -457,7 +457,7 @@ function Portfolio() {
 
         {/* Experience */}
         <Reveal delay={80}>
-          <Section id="experience" label="03" title="Experience">
+          <Section id="experience" title="Experience">
             <ol className="relative border-l border-border/60 pl-6 md:pl-8">
               {EXPERIENCE.map((e, i) => (
                 <Reveal key={e.role + i} delay={i * 80} direction="left">
@@ -492,7 +492,7 @@ function Portfolio() {
 
         {/* Projects */}
         <Reveal delay={80}>
-          <Section id="projects" label="04" title="Selected Projects">
+          <Section id="projects" title="Selected Projects">
             <div className="mb-8 flex flex-wrap gap-2">
               {PROJECT_TECH_FILTERS.map((t) => (
                 <button
@@ -550,7 +550,7 @@ function Portfolio() {
 
         {/* Blog preview */}
         <Reveal delay={80}>
-          <Section id="writing" label="05" title="From the blog">
+          <Section id="writing" title="From the blog">
             <div className="grid gap-5 md:grid-cols-3">
               {BLOG_POSTS.map((p, idx) => (
                 <Reveal key={p.slug} delay={idx * 80}>
@@ -588,7 +588,7 @@ function Portfolio() {
 
         {/* Contact */}
         <Reveal delay={80}>
-          <Section id="contact" label="06" title="Get in touch">
+          <Section id="contact" title="Get in touch">
             <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
               <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
                 Building something data-heavy?
@@ -656,17 +656,18 @@ function Portfolio() {
 
 function Section({
   id,
-  label,
   title,
   children,
 }: {
   id: string;
-  label: string;
   title: string;
   children: React.ReactNode;
 }) {
   return (
     <section id={id} className="scroll-mt-20 py-20 md:py-28">
+      <h2 className="mb-10 text-3xl font-semibold tracking-tight md:mb-14 md:text-4xl">
+        {title}
+      </h2>
       {children}
     </section>
   );

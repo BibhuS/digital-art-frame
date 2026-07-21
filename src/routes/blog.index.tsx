@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { BLOG_POSTS } from "@/lib/portfolio-data";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
@@ -23,9 +23,6 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogIndex() {
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-xl">
@@ -33,7 +30,10 @@ function BlogIndex() {
           <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
             <ArrowLeft className="h-4 w-4" /> Back
           </Link>
-          <span className="font-mono text-xs text-muted-foreground">bibhu.dev / blog</span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs text-muted-foreground">bibhu.dev / blog</span>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 

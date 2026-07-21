@@ -464,7 +464,6 @@ function Portfolio() {
               {EXPERIENCE.map((e, i) => (
                 <Reveal key={e.role + i} delay={i * 80} direction="left">
                   <li className="pb-12 last:pb-0">
-                    <span className="absolute -left-[7px] mt-2 h-3 w-3 rounded-full border border-primary bg-background" />
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <h3 className="text-lg font-semibold text-foreground">
                         {e.role}

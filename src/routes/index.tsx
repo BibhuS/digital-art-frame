@@ -429,30 +429,33 @@ function Portfolio() {
         </Reveal>
 
         {/* Skills */}
-        <Section id="skills" label="02" title="Skills & Toolkit">
-          <div className="grid gap-4 md:grid-cols-2">
-            {SKILLS.map((s) => (
-              <div
-                key={s.group}
-                className="group rounded-xl border border-border/60 bg-card/40 p-6 transition hover:border-primary/30 hover:bg-card/70"
-              >
-                <div className="text-xs uppercase tracking-widest text-primary">
-                  {s.group}
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {s.items.map((i) => (
-                    <span
-                      key={i}
-                      className="rounded-md border border-border/60 bg-background/60 px-2.5 py-1 text-xs text-foreground/90"
-                    >
-                      {i}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
+        <Reveal delay={80}>
+          <Section id="skills" label="02" title="Skills & Toolkit">
+            <div className="grid gap-4 md:grid-cols-2">
+              {SKILLS.map((s, idx) => (
+                <Reveal key={s.group} delay={idx * 60}>
+                  <div
+                    className="group rounded-xl border border-border/60 bg-card/40 p-6 transition hover:border-primary/30 hover:bg-card/70"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-primary">
+                      {s.group}
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {s.items.map((i) => (
+                        <span
+                          key={i}
+                          className="rounded-md border border-border/60 bg-background/60 px-2.5 py-1 text-xs text-foreground/90"
+                        >
+                          {i}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </Section>
+        </Reveal>
 
         {/* Experience */}
         <Section id="experience" label="03" title="Experience">

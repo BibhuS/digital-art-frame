@@ -667,17 +667,6 @@ function Section({
 }) {
   return (
     <section id={id} className="scroll-mt-20 py-20 md:py-28">
-      <div className="mb-10 flex items-end justify-between gap-4">
-        <div>
-          <div className="font-mono text-xs uppercase tracking-widest text-primary">
-            {label} — Section
-          </div>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight md:text-4xl">
-            {title}
-          </h2>
-        </div>
-        <div className="hidden h-px flex-1 bg-border/60 md:block" />
-      </div>
       {children}
     </section>
   );

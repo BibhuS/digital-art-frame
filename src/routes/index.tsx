@@ -649,13 +649,9 @@ function Portfolio() {
           </Section>
         </Reveal>
 
-        <footer className="border-t border-border/60 py-8 text-xs text-muted-foreground">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span>© {new Date().getFullYear()} Bibhu Bhushan Sinha</span>
-            <span className="font-mono">Built with TanStack Start</span>
-          </div>
-        </footer>
+        <SiteFooter />
       </main>
+      <BackToTop />
     </div>
   );
 }

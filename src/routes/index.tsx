@@ -206,7 +206,7 @@ function Portfolio() {
             <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
               &lt;/&gt;
             </span>
-            <span className="hidden sm:inline text-foreground/90">bibhu.dev</span>
+            <span className="hidden sm:inline text-foreground/90">Bibhu Bhushan Sinha</span>
           </a>
           <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
             {NAV.map((n) =>

@@ -22,7 +22,7 @@ export function SiteFooter() {
               <span className="grid h-8 w-8 place-items-center rounded-md bg-primary/15 text-primary">
                 &lt;/&gt;
               </span>
-              <span className="text-foreground/90">bibhu.dev</span>
+              <span className="text-foreground/90">Bibhu Bhushan Sinha</span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Portfolio of Bibhu Bhushan Sinha, Senior Data Engineer building

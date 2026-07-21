@@ -33,7 +33,7 @@ function BlogIndex() {
             <ArrowLeft className="h-4 w-4" /> Back
           </Link>
           <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-muted-foreground">bibhu.dev / blog</span>
+            <span className="font-mono text-xs text-muted-foreground">Bibhu Bhushan Sinha / blog</span>
             <ThemeToggle />
           </div>
         </div>

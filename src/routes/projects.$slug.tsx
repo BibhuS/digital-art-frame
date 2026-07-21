@@ -9,15 +9,20 @@ export const Route = createFileRoute("/projects/$slug")({
     if (!project) throw notFound();
     return { project };
   },
-  head: ({ loaderData }) => ({
+  head: ({ params, loaderData }) => ({
     meta: loaderData
       ? [
           { title: `${loaderData.project.title} — Bibhu Bhushan Sinha` },
           { name: "description", content: loaderData.project.body },
           { property: "og:title", content: loaderData.project.title },
           { property: "og:description", content: loaderData.project.body },
+          { property: "og:type", content: "article" },
+          { property: "og:url", content: `/projects/${params.slug}` },
         ]
       : [{ title: "Project not found" }, { name: "robots", content: "noindex" }],
+    links: loaderData
+      ? [{ rel: "canonical", href: `/projects/${params.slug}` }]
+      : [],
   }),
   component: ProjectPage,
   notFoundComponent: () => (

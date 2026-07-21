@@ -11,7 +11,7 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!post) throw notFound();
     return { post };
   },
-  head: ({ loaderData }) => ({
+  head: ({ params, loaderData }) => ({
     meta: loaderData
       ? [
           { title: `${loaderData.post.title} — Bibhu Bhushan Sinha` },
@@ -19,8 +19,12 @@ export const Route = createFileRoute("/blog/$slug")({
           { property: "og:title", content: loaderData.post.title },
           { property: "og:description", content: loaderData.post.excerpt },
           { property: "og:type", content: "article" },
+          { property: "og:url", content: `/blog/${params.slug}` },
         ]
       : [{ title: "Post not found" }, { name: "robots", content: "noindex" }],
+    links: loaderData
+      ? [{ rel: "canonical", href: `/blog/${params.slug}` }]
+      : [],
   }),
   component: PostPage,
   notFoundComponent: () => (

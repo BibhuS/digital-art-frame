@@ -17,7 +17,9 @@ export const Route = createFileRoute("/blog/")({
         property: "og:description",
         content: "Notes on data engineering, Spark, Databricks and cloud lakehouses.",
       },
+      { property: "og:url", content: "/blog" },
     ],
+    links: [{ rel: "canonical", href: "/blog" }],
   }),
   component: BlogIndex,
 });

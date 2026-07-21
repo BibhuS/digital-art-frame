@@ -208,3 +208,6 @@ export const SOCIAL = {
   github: "https://github.com/BibhuS",
   linkedin: "https://www.linkedin.com/in/bibhu-bhushan-sinha/",
 };
+
+// Served from /public so it works on GitHub Pages (subpath) and Lovable preview.
+export const RESUME_URL = `${import.meta.env.BASE_URL}Bibhu_Bhushan_Sinha_Resume.pdf`;

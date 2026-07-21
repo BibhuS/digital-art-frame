@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "./theme-toggle";
-import resumeAsset from "@/assets/resume.pdf.asset.json";
+import { RESUME_URL } from "@/lib/portfolio-data";
 
 const NAV = [
   { href: "#about", label: "About" },
@@ -99,7 +99,7 @@ export function MobileNav() {
           </button>
 
           <a
-            href={resumeAsset.url}
+            href={RESUME_URL}
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2.5 text-sm text-muted-foreground transition hover:border-primary/40 hover:text-foreground"

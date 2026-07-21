@@ -218,13 +218,13 @@ function Portfolio() {
               Bibhu Bhushan Sinha
             </span>
           </a>
-          <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
+          <nav className="hidden gap-8 text-sm md:flex">
             {NAV.map((n) =>
               n.route ? (
                 <Link
                   key={n.href}
                   to={n.href}
-                  className="transition-colors hover:text-foreground"
+                  className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {n.label}
                 </Link>
@@ -232,8 +232,15 @@ function Portfolio() {
                 <a
                   key={n.href}
                   href={n.href}
-                  className="transition-colors hover:text-foreground"
+                  className={`relative transition-colors hover:text-foreground ${
+                    isActive(n.href)
+                      ? "font-medium text-primary"
+                      : "text-muted-foreground"
+                  }`}
                 >
+                  {isActive(n.href) && (
+                    <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
+                  )}
                   {n.label}
                 </a>
               ),

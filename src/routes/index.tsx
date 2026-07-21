@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
   ArrowUpRight,
-  BookOpen,
   Command as CommandIcon,
   Download,
   Github,
@@ -272,15 +271,17 @@ function Portfolio() {
           </div>
           <div className="grid items-center gap-10 lg:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
           <div className="order-1 min-w-0">
-          <div className="flex items-center gap-2 text-xs font-mono text-primary">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-            AVAILABLE
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            Available for opportunities
           </div>
           <h1 className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
-            Bibhu Bhushan
-            <br />
+            Hi, I&apos;m{" "}
             <span className="bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
-              Sinha.
+              Bibhu Bhushan Sinha.
             </span>
           </h1>
           <RotatingRole />
@@ -313,7 +314,13 @@ function Portfolio() {
               href="#projects"
               className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/40"
             >
-              View work <ArrowUpRight className="h-4 w-4" />
+              View My Work <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
+            >
+              Get in Touch
             </a>
             <a
               href={resumeAsset.url}
@@ -321,14 +328,8 @@ function Portfolio() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
             >
-              <Download className="h-4 w-4" /> Download resume
+              <Download className="h-4 w-4" /> Resume
             </a>
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
-            >
-              <BookOpen className="h-4 w-4" /> Read the blog
-            </Link>
             <a
               href={SOCIAL.github}
               target="_blank"

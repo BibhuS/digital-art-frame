@@ -315,7 +315,13 @@ function Portfolio() {
               href="#projects"
               className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/40"
             >
-              View work <ArrowUpRight className="h-4 w-4" />
+              View My Work <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
+            >
+              Get in Touch
             </a>
             <a
               href={resumeAsset.url}
@@ -323,14 +329,8 @@ function Portfolio() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
             >
-              <Download className="h-4 w-4" /> Download resume
+              <Download className="h-4 w-4" /> Resume
             </a>
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
-            >
-              <BookOpen className="h-4 w-4" /> Read the blog
-            </Link>
             <a
               href={SOCIAL.github}
               target="_blank"

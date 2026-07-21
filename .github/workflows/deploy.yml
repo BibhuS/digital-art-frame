@@ -30,7 +30,7 @@ jobs:
       - name: Build
         run: |
           REPO_NAME="${{ github.event.repository.name }}"
-          if [[ "$REPO_NAME" == *.github.io ]] || [ -f CNAME ]; then
+          if [[ "$REPO_NAME" == *.github.io ]]; then
             export GITHUB_PAGES_BASE="/"
           else
             export GITHUB_PAGES_BASE="/${REPO_NAME}/"
@@ -42,11 +42,7 @@ jobs:
       - name: Prepare Pages output
         run: |
           BASE_PATH="${GITHUB_PAGES_BASE:-/}"
-          if [ -f CNAME ]; then
-            PAGES_ORIGIN="https://$(cat CNAME | head -n 1 | tr -d '[:space:]')"
-          else
-            PAGES_ORIGIN="https://bibhus.github.io"
-          fi
+          PAGES_ORIGIN="https://${{ github.repository_owner }}.github.io"
           echo "Base path: $BASE_PATH"
           echo "Pages origin: $PAGES_ORIGIN"
           # TanStack Start's production build writes browser assets here.
@@ -107,6 +103,10 @@ jobs:
           EOF
 
           PUBLIC_DIR="$PUBLIC_DIR" BASE_PATH="$BASE_PATH" PAGES_ORIGIN="$PAGES_ORIGIN" node /tmp/render-pages.mjs
+
+          # Temporary GitHub Pages URL mode: do not deploy a CNAME file, otherwise
+          # GitHub keeps redirecting the project site to the custom domain.
+          rm -f "$PUBLIC_DIR/CNAME"
 
           # Disable Jekyll so files/folders starting with _ are served as-is.
           echo "" > "$PUBLIC_DIR/.nojekyll"

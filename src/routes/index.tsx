@@ -201,9 +201,9 @@ function Portfolio() {
 
       {/* Nav */}
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <a href="#top" className="flex items-center gap-2 font-mono text-sm tracking-tight">
-            <span className="hidden sm:inline bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+          <a href="#top" className="flex min-w-0 items-center gap-2 font-mono text-sm tracking-tight">
+            <span className="truncate bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
               Bibhu Bhushan Sinha
             </span>
           </a>
@@ -262,9 +262,9 @@ function Portfolio() {
         </div>
       </header>
 
-      <main id="top" className="mx-auto max-w-6xl px-6">
+      <main id="top" className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Hero */}
-        <section className="relative pt-24 pb-24 md:pt-32 md:pb-32">
+        <section className="relative pt-14 pb-16 md:pt-32 md:pb-32">
           <div className="pointer-events-auto absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
             <HeroCanvas />
           </div>
@@ -277,14 +277,14 @@ function Portfolio() {
             </span>
             Available for opportunities
           </div>
-          <h1 className="mt-6 text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
+          <h1 className="mt-6 text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl md:text-7xl">
             Hi, I&apos;m{" "}
             <span className="bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
               Bibhu Bhushan Sinha.
             </span>
           </h1>
           <RotatingRole />
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg md:text-xl">
             Data Engineer & Architect with 13+ years turning complex, messy
             data into scalable, cloud-native platforms. I specialize in
             Databricks, Spark, AWS, Snowflake, and modern lakehouse
@@ -297,19 +297,19 @@ function Portfolio() {
           </p>
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
-              <MapPin className="h-4 w-4" /> United Kingdom
+              <MapPin className="h-4 w-4 shrink-0" /> United Kingdom
             </span>
             <a
               href={`mailto:${SOCIAL.email}`}
-              className="inline-flex items-center gap-1.5 transition hover:text-foreground"
+              className="inline-flex min-w-0 max-w-full items-center gap-1.5 transition hover:text-foreground"
             >
-              <Mail className="h-4 w-4" /> {SOCIAL.email}
+              <Mail className="h-4 w-4 shrink-0" /> <span className="truncate">{SOCIAL.email}</span>
             </a>
             <a
               href={`tel:${SOCIAL.phone}`}
               className="inline-flex items-center gap-1.5 transition hover:text-foreground"
             >
-              <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
+              <Phone className="h-4 w-4 shrink-0" /> {SOCIAL.phoneDisplay}
             </a>
           </div>
 
@@ -596,7 +596,7 @@ function Portfolio() {
         <Reveal delay={80}>
           <Section id="contact" title="Get in touch">
             <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
-              <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl">
                 Building something data-heavy?
               </h3>
               <p className="mt-3 max-w-xl text-muted-foreground">
@@ -670,8 +670,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-20 py-20 md:py-28">
-      <h2 className="mb-10 text-3xl font-semibold tracking-tight md:mb-14 md:text-4xl">
+    <section id={id} className="scroll-mt-20 py-14 md:py-28">
+      <h2 className="mb-8 text-2xl font-semibold tracking-tight sm:text-3xl md:mb-14 md:text-4xl">
         {title}
       </h2>
       {children}

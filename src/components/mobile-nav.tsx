@@ -12,6 +12,7 @@ import { ThemeToggle } from "./theme-toggle";
 import { RESUME_URL } from "@/lib/portfolio-data";
 
 const NAV = [
+  { href: "#top", label: "Home" },
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
   { href: "#experience", label: "Experience" },

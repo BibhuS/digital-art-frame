@@ -17,6 +17,11 @@ import { OrbitAvatar } from "@/components/orbit-avatar";
 import { RotatingRole } from "@/components/rotating-role";
 import { CommandPalette } from "@/components/command-palette";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Reveal } from "@/components/reveal";
+import { AnimatedCounter } from "@/components/animated-counter";
+import { BackToTop } from "@/components/back-to-top";
+import { MobileNav } from "@/components/mobile-nav";
+import { SiteFooter } from "@/components/site-footer";
 import {
   BLOG_POSTS,
   PROJECTS,
@@ -237,21 +242,24 @@ function Portfolio() {
                 });
                 document.dispatchEvent(ev);
               }}
-              className="hidden items-center gap-1.5 rounded-md border border-border bg-background/40 px-2.5 py-1.5 text-xs text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:inline-flex"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-background/40 text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:inline-flex sm:h-auto sm:w-auto sm:gap-1.5 sm:px-2.5 sm:py-1.5"
               aria-label="Open command palette"
             >
               <CommandIcon className="h-3.5 w-3.5" />
-              <span className="font-mono">⌘K</span>
+              <span className="hidden font-mono text-xs sm:inline">⌘K</span>
             </button>
-            <ThemeToggle />
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
             <a
               href={resumeAsset.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20"
+              className="hidden items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20 sm:inline-flex"
             >
               <Download className="h-3.5 w-3.5" /> Resume
             </a>
+            <MobileNav />
           </div>
         </div>
       </header>
@@ -348,14 +356,18 @@ function Portfolio() {
 
           {/* Stat strip */}
           <div className="mt-16 grid grid-cols-2 gap-4 border-t border-border/60 pt-8 sm:grid-cols-4">
-            {[
-              ["13+", "Years in data"],
-              ["9+", "Years in cloud"],
-              ["6", "Enterprise clients"],
-              ["4", "Industry domains"],
-            ].map(([n, label]) => (
+            {(
+              [
+                [13, "+", "Years in data"],
+                [9, "+", "Years in cloud"],
+                [6, "", "Enterprise clients"],
+                [4, "", "Industry domains"],
+              ] as [number, string, string][]
+            ).map(([n, suffix, label]) => (
               <div key={label}>
-                <div className="text-3xl font-semibold text-foreground">{n}</div>
+                <div className="text-3xl font-semibold text-foreground">
+                  <AnimatedCounter value={n} suffix={suffix} />
+                </div>
                 <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
                   {label}
                 </div>
@@ -365,268 +377,281 @@ function Portfolio() {
         </section>
 
         {/* About */}
-        <Section id="about" label="01" title="About">
-          <div className="grid gap-10 md:grid-cols-3">
-            <div className="space-y-4 md:col-span-2 text-muted-foreground leading-relaxed">
-              <p>
-                I design and ship large-scale data platforms — the kind that
-                move billions of records a day, survive audits, and stay boring
-                to operate. Most of my career has been in{" "}
-                <span className="text-foreground">Spark, PySpark and Scala</span>{" "}
-                on Cloudera, AWS and Azure Databricks.
-              </p>
-              <p>
-                Right now I'm at JP Morgan Chase modernizing legacy ETL onto
-                Databricks with a Medallion lakehouse on AWS. Before that I
-                spent two years at Capgemini building an investment-banking
-                datamart for Barclays with AWS Glue, Step Functions and
-                Redshift.
-              </p>
-              <p>
-                I care about the un-glamorous parts: idempotent pipelines,
-                metadata-driven orchestration, honest reconciliation, and
-                pipelines that a tired on-call engineer can actually read at
-                3am.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/60 bg-card/40 p-6">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">
-                Domains
+        <Reveal>
+          <Section id="about" label="01" title="About">
+            <div className="grid gap-10 md:grid-cols-3">
+              <div className="space-y-4 md:col-span-2 text-muted-foreground leading-relaxed">
+                <p>
+                  I design and ship large-scale data platforms — the kind that
+                  move billions of records a day, survive audits, and stay boring
+                  to operate. Most of my career has been in{" "}
+                  <span className="text-foreground">Spark, PySpark and Scala</span>{" "}
+                  on Cloudera, AWS and Azure Databricks.
+                </p>
+                <p>
+                  Right now I'm at JP Morgan Chase modernizing legacy ETL onto
+                  Databricks with a Medallion lakehouse on AWS. Before that I
+                  spent two years at Capgemini building an investment-banking
+                  datamart for Barclays with AWS Glue, Step Functions and
+                  Redshift.
+                </p>
+                <p>
+                  I care about the un-glamorous parts: idempotent pipelines,
+                  metadata-driven orchestration, honest reconciliation, and
+                  pipelines that a tired on-call engineer can actually read at
+                  3am.
+                </p>
               </div>
-              <ul className="mt-4 space-y-2 text-sm">
-                {[
-                  "Banking & Capital Markets",
-                  "Insurance",
-                  "IoT & Streaming",
-                  "Aerospace / GIS",
-                ].map((d) => (
-                  <li key={d} className="flex items-center gap-2">
-                    <span className="h-1 w-1 rounded-full bg-primary" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">
-                Methodology
-              </div>
-              <p className="mt-2 text-sm">Agile · Scrum · Waterfall</p>
-            </div>
-          </div>
-        </Section>
-
-        {/* Skills */}
-        <Section id="skills" label="02" title="Skills & Toolkit">
-          <div className="grid gap-4 md:grid-cols-2">
-            {SKILLS.map((s) => (
-              <div
-                key={s.group}
-                className="group rounded-xl border border-border/60 bg-card/40 p-6 transition hover:border-primary/30 hover:bg-card/70"
-              >
-                <div className="text-xs uppercase tracking-widest text-primary">
-                  {s.group}
+              <div className="rounded-xl border border-border/60 bg-card/40 p-6">
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Domains
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {s.items.map((i) => (
-                    <span
-                      key={i}
-                      className="rounded-md border border-border/60 bg-background/60 px-2.5 py-1 text-xs text-foreground/90"
-                    >
-                      {i}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* Experience */}
-        <Section id="experience" label="03" title="Experience">
-          <ol className="relative border-l border-border/60 pl-6 md:pl-8">
-            {EXPERIENCE.map((e, i) => (
-              <li key={e.role + i} className="pb-12 last:pb-0">
-                <span className="absolute -left-[7px] mt-2 h-3 w-3 rounded-full border border-primary bg-background" />
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {e.role}
-                  </h3>
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {e.period}
-                  </span>
-                </div>
-                <div className="mt-1 text-sm text-primary">{e.org}</div>
-                <div className="mt-0.5 text-xs text-muted-foreground">
-                  {e.location}
-                </div>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  {e.bullets.map((b, j) => (
-                    <li key={j} className="flex gap-2">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/70" />
-                      <span>{b}</span>
+                <ul className="mt-4 space-y-2 text-sm">
+                  {[
+                    "Banking & Capital Markets",
+                    "Insurance",
+                    "IoT & Streaming",
+                    "Aerospace / GIS",
+                  ].map((d) => (
+                    <li key={d} className="flex items-center gap-2">
+                      <span className="h-1 w-1 rounded-full bg-primary" />
+                      {d}
                     </li>
                   ))}
                 </ul>
-              </li>
-            ))}
-          </ol>
-        </Section>
+                <div className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">
+                  Methodology
+                </div>
+                <p className="mt-2 text-sm">Agile · Scrum · Waterfall</p>
+              </div>
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* Skills */}
+        <Reveal delay={80}>
+          <Section id="skills" label="02" title="Skills & Toolkit">
+            <div className="grid gap-4 md:grid-cols-2">
+              {SKILLS.map((s, idx) => (
+                <Reveal key={s.group} delay={idx * 60}>
+                  <div
+                    className="group rounded-xl border border-border/60 bg-card/40 p-6 transition hover:border-primary/30 hover:bg-card/70"
+                  >
+                    <div className="text-xs uppercase tracking-widest text-primary">
+                      {s.group}
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {s.items.map((i) => (
+                        <span
+                          key={i}
+                          className="rounded-md border border-border/60 bg-background/60 px-2.5 py-1 text-xs text-foreground/90"
+                        >
+                          {i}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </Section>
+        </Reveal>
+
+        {/* Experience */}
+        <Reveal delay={80}>
+          <Section id="experience" label="03" title="Experience">
+            <ol className="relative border-l border-border/60 pl-6 md:pl-8">
+              {EXPERIENCE.map((e, i) => (
+                <Reveal key={e.role + i} delay={i * 80} direction="left">
+                  <li className="pb-12 last:pb-0">
+                    <span className="absolute -left-[7px] mt-2 h-3 w-3 rounded-full border border-primary bg-background" />
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="text-lg font-semibold text-foreground">
+                        {e.role}
+                      </h3>
+                      <span className="font-mono text-xs text-muted-foreground">
+                        {e.period}
+                      </span>
+                    </div>
+                    <div className="mt-1 text-sm text-primary">{e.org}</div>
+                    <div className="mt-0.5 text-xs text-muted-foreground">
+                      {e.location}
+                    </div>
+                    <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                      {e.bullets.map((b, j) => (
+                        <li key={j} className="flex gap-2">
+                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/70" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+          </Section>
+        </Reveal>
 
         {/* Projects */}
-        <Section id="projects" label="04" title="Selected Projects">
-          <div className="mb-8 flex flex-wrap gap-2">
-            {PROJECT_TECH_FILTERS.map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setFilter(t)}
-                className={
-                  "rounded-full border px-3 py-1 text-xs transition " +
-                  (filter === t
-                    ? "border-primary bg-primary/15 text-primary"
-                    : "border-border/60 text-muted-foreground hover:border-primary/30 hover:text-foreground")
-                }
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-          <div className="grid gap-5 md:grid-cols-2">
-            {filteredProjects.map((p) => (
-              <Link
-                key={p.title}
-                to="/projects/$slug"
-                params={{ slug: p.slug }}
-                className="group relative overflow-hidden rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
-              >
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition group-hover:opacity-100" />
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                      {p.client}
-                    </div>
-                    <h3 className="mt-1 text-lg font-semibold text-foreground">
-                      {p.title}
-                    </h3>
-                  </div>
-                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  {p.body}
-                </p>
-                <div className="mt-5 inline-flex rounded-md border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
-                  {p.tag}
-                </div>
-              </Link>
-            ))}
-          </div>
-          {filteredProjects.length === 0 && (
-            <div className="rounded-xl border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
-              No projects match that filter yet.
+        <Reveal delay={80}>
+          <Section id="projects" label="04" title="Selected Projects">
+            <div className="mb-8 flex flex-wrap gap-2">
+              {PROJECT_TECH_FILTERS.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setFilter(t)}
+                  className={
+                    "rounded-full border px-3 py-1 text-xs transition " +
+                    (filter === t
+                      ? "border-primary bg-primary/15 text-primary"
+                      : "border-border/60 text-muted-foreground hover:border-primary/30 hover:text-foreground")
+                  }
+                >
+                  {t}
+                </button>
+              ))}
             </div>
-          )}
-        </Section>
+            <div className="grid gap-5 md:grid-cols-2">
+              {filteredProjects.map((p, idx) => (
+                <Reveal key={p.title} delay={idx * 80}>
+                  <Link
+                    to="/projects/$slug"
+                    params={{ slug: p.slug }}
+                    className="group relative block h-full overflow-hidden rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
+                  >
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition group-hover:opacity-100" />
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                          {p.client}
+                        </div>
+                        <h3 className="mt-1 text-lg font-semibold text-foreground">
+                          {p.title}
+                        </h3>
+                      </div>
+                      <ArrowUpRight className="h-5 w-5 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      {p.body}
+                    </p>
+                    <div className="mt-5 inline-flex rounded-md border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
+                      {p.tag}
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+            {filteredProjects.length === 0 && (
+              <div className="rounded-xl border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
+                No projects match that filter yet.
+              </div>
+            )}
+          </Section>
+        </Reveal>
 
         {/* Blog preview */}
-        <Section id="writing" label="05" title="From the blog">
-          <div className="grid gap-5 md:grid-cols-3">
-            {BLOG_POSTS.map((p) => (
+        <Reveal delay={80}>
+          <Section id="writing" label="05" title="From the blog">
+            <div className="grid gap-5 md:grid-cols-3">
+              {BLOG_POSTS.map((p, idx) => (
+                <Reveal key={p.slug} delay={idx * 80}>
+                  <Link
+                    to="/blog/$slug"
+                    params={{ slug: p.slug }}
+                    className="group block h-full rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
+                  >
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span className="font-mono uppercase tracking-widest text-primary">
+                        {p.tag}
+                      </span>
+                      <span>{p.readingMinutes} min</span>
+                    </div>
+                    <h3 className="mt-3 text-lg font-semibold text-foreground group-hover:text-primary">
+                      {p.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {p.excerpt}
+                    </p>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+            <div className="mt-8">
               <Link
-                key={p.slug}
-                to="/blog/$slug"
-                params={{ slug: p.slug }}
-                className="group rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
+                to="/blog"
+                className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent"
               >
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="font-mono uppercase tracking-widest text-primary">
-                    {p.tag}
-                  </span>
-                  <span>{p.readingMinutes} min</span>
-                </div>
-                <h3 className="mt-3 text-lg font-semibold text-foreground group-hover:text-primary">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {p.excerpt}
-                </p>
+                All posts <ArrowUpRight className="h-4 w-4" />
               </Link>
-            ))}
-          </div>
-          <div className="mt-8">
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-accent"
-            >
-              All posts <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </Section>
+            </div>
+          </Section>
+        </Reveal>
 
         {/* Contact */}
-        <Section id="contact" label="06" title="Get in touch">
-          <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
-            <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Building something data-heavy?
-            </h3>
-            <p className="mt-3 max-w-xl text-muted-foreground">
-              Happy to chat about Spark, Databricks, lakehouses, streaming, or
-              your next data platform.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={`mailto:${SOCIAL.email}`}
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-              >
-                <Mail className="h-4 w-4" /> Say hello
-              </a>
-              <a
-                href={resumeAsset.url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40"
-              >
-                <Download className="h-4 w-4" /> Resume (PDF)
-              </a>
+        <Reveal delay={80}>
+          <Section id="contact" label="06" title="Get in touch">
+            <div className="rounded-2xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-8 md:p-12">
+              <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                Building something data-heavy?
+              </h3>
+              <p className="mt-3 max-w-xl text-muted-foreground">
+                Happy to chat about Spark, Databricks, lakehouses, streaming, or
+                your next data platform.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={`mailto:${SOCIAL.email}`}
+                  className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+                >
+                  <Mail className="h-4 w-4" /> Say hello
+                </a>
+                <a
+                  href={resumeAsset.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40"
+                >
+                  <Download className="h-4 w-4" /> Resume (PDF)
+                </a>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-6 border-t border-border/60 pt-6 text-sm text-muted-foreground">
+                <a
+                  href={`mailto:${SOCIAL.email}`}
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Mail className="h-4 w-4" /> {SOCIAL.email}
+                </a>
+                <a
+                  href={`tel:${SOCIAL.phone}`}
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
+                </a>
+                <a
+                  href={SOCIAL.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Linkedin className="h-4 w-4" /> LinkedIn
+                </a>
+                <a
+                  href={SOCIAL.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Github className="h-4 w-4" /> GitHub
+                </a>
+              </div>
             </div>
-            <div className="mt-10 flex flex-wrap gap-6 border-t border-border/60 pt-6 text-sm text-muted-foreground">
-              <a
-                href={`mailto:${SOCIAL.email}`}
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Mail className="h-4 w-4" /> {SOCIAL.email}
-              </a>
-              <a
-                href={`tel:${SOCIAL.phone}`}
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Phone className="h-4 w-4" /> {SOCIAL.phoneDisplay}
-              </a>
-              <a
-                href={SOCIAL.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </a>
-              <a
-                href={SOCIAL.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Github className="h-4 w-4" /> GitHub
-              </a>
-            </div>
-          </div>
-        </Section>
+          </Section>
+        </Reveal>
 
-        <footer className="border-t border-border/60 py-8 text-xs text-muted-foreground">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span>© {new Date().getFullYear()} Bibhu Bhushan Sinha</span>
-            <span className="font-mono">Built with TanStack Start</span>
-          </div>
-        </footer>
+        <SiteFooter />
       </main>
+      <BackToTop />
     </div>
   );
 }

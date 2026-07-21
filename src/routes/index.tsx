@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useActiveSection } from "@/hooks/use-active-section";
 import {
   ArrowUpRight,
   Command as CommandIcon,

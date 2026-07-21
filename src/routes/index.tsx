@@ -458,35 +458,39 @@ function Portfolio() {
         </Reveal>
 
         {/* Experience */}
-        <Section id="experience" label="03" title="Experience">
-          <ol className="relative border-l border-border/60 pl-6 md:pl-8">
-            {EXPERIENCE.map((e, i) => (
-              <li key={e.role + i} className="pb-12 last:pb-0">
-                <span className="absolute -left-[7px] mt-2 h-3 w-3 rounded-full border border-primary bg-background" />
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {e.role}
-                  </h3>
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {e.period}
-                  </span>
-                </div>
-                <div className="mt-1 text-sm text-primary">{e.org}</div>
-                <div className="mt-0.5 text-xs text-muted-foreground">
-                  {e.location}
-                </div>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  {e.bullets.map((b, j) => (
-                    <li key={j} className="flex gap-2">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/70" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ol>
-        </Section>
+        <Reveal delay={80}>
+          <Section id="experience" label="03" title="Experience">
+            <ol className="relative border-l border-border/60 pl-6 md:pl-8">
+              {EXPERIENCE.map((e, i) => (
+                <Reveal key={e.role + i} delay={i * 80} direction="left">
+                  <li className="pb-12 last:pb-0">
+                    <span className="absolute -left-[7px] mt-2 h-3 w-3 rounded-full border border-primary bg-background" />
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="text-lg font-semibold text-foreground">
+                        {e.role}
+                      </h3>
+                      <span className="font-mono text-xs text-muted-foreground">
+                        {e.period}
+                      </span>
+                    </div>
+                    <div className="mt-1 text-sm text-primary">{e.org}</div>
+                    <div className="mt-0.5 text-xs text-muted-foreground">
+                      {e.location}
+                    </div>
+                    <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                      {e.bullets.map((b, j) => (
+                        <li key={j} className="flex gap-2">
+                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/70" />
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+          </Section>
+        </Reveal>
 
         {/* Projects */}
         <Section id="projects" label="04" title="Selected Projects">

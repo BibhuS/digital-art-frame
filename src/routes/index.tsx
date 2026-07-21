@@ -10,7 +10,7 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
-import resumeAsset from "@/assets/resume.pdf.asset.json";
+
 import { HeroCanvas } from "@/components/hero-canvas";
 import { OrbitAvatar } from "@/components/orbit-avatar";
 import { RotatingRole } from "@/components/rotating-role";
@@ -25,6 +25,7 @@ import {
   BLOG_POSTS,
   PROJECTS,
   PROJECT_TECH_FILTERS,
+  RESUME_URL,
   SOCIAL,
 } from "@/lib/portfolio-data";
 
@@ -250,7 +251,7 @@ function Portfolio() {
               <ThemeToggle />
             </div>
             <a
-              href={resumeAsset.url}
+              href={RESUME_URL}
               target="_blank"
               rel="noreferrer"
               className="hidden items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20 sm:inline-flex"
@@ -327,7 +328,7 @@ function Portfolio() {
               Get in Touch
             </a>
             <a
-              href={resumeAsset.url}
+              href={RESUME_URL}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
@@ -611,7 +612,7 @@ function Portfolio() {
                   <Mail className="h-4 w-4" /> Say hello
                 </a>
                 <a
-                  href={resumeAsset.url}
+                  href={RESUME_URL}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40"

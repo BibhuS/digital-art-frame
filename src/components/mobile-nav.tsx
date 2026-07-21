@@ -31,7 +31,7 @@ function openCommandPalette() {
   document.dispatchEvent(ev);
 }
 
-export function MobileNav() {
+export function MobileNav({ activeId }: { activeId: string }) {
   const [open, setOpen] = useState(false);
 
   const handleAnchor = (href: string) => {

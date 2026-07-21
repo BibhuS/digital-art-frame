@@ -493,59 +493,62 @@ function Portfolio() {
         </Reveal>
 
         {/* Projects */}
-        <Section id="projects" label="04" title="Selected Projects">
-          <div className="mb-8 flex flex-wrap gap-2">
-            {PROJECT_TECH_FILTERS.map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setFilter(t)}
-                className={
-                  "rounded-full border px-3 py-1 text-xs transition " +
-                  (filter === t
-                    ? "border-primary bg-primary/15 text-primary"
-                    : "border-border/60 text-muted-foreground hover:border-primary/30 hover:text-foreground")
-                }
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-          <div className="grid gap-5 md:grid-cols-2">
-            {filteredProjects.map((p) => (
-              <Link
-                key={p.title}
-                to="/projects/$slug"
-                params={{ slug: p.slug }}
-                className="group relative overflow-hidden rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
-              >
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition group-hover:opacity-100" />
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                      {p.client}
-                    </div>
-                    <h3 className="mt-1 text-lg font-semibold text-foreground">
-                      {p.title}
-                    </h3>
-                  </div>
-                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  {p.body}
-                </p>
-                <div className="mt-5 inline-flex rounded-md border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
-                  {p.tag}
-                </div>
-              </Link>
-            ))}
-          </div>
-          {filteredProjects.length === 0 && (
-            <div className="rounded-xl border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
-              No projects match that filter yet.
+        <Reveal delay={80}>
+          <Section id="projects" label="04" title="Selected Projects">
+            <div className="mb-8 flex flex-wrap gap-2">
+              {PROJECT_TECH_FILTERS.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setFilter(t)}
+                  className={
+                    "rounded-full border px-3 py-1 text-xs transition " +
+                    (filter === t
+                      ? "border-primary bg-primary/15 text-primary"
+                      : "border-border/60 text-muted-foreground hover:border-primary/30 hover:text-foreground")
+                  }
+                >
+                  {t}
+                </button>
+              ))}
             </div>
-          )}
-        </Section>
+            <div className="grid gap-5 md:grid-cols-2">
+              {filteredProjects.map((p, idx) => (
+                <Reveal key={p.title} delay={idx * 80}>
+                  <Link
+                    to="/projects/$slug"
+                    params={{ slug: p.slug }}
+                    className="group relative block h-full overflow-hidden rounded-xl border border-border/60 bg-card/40 p-6 transition hover:-translate-y-0.5 hover:border-primary/40 hover:bg-card/70"
+                  >
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition group-hover:opacity-100" />
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                          {p.client}
+                        </div>
+                        <h3 className="mt-1 text-lg font-semibold text-foreground">
+                          {p.title}
+                        </h3>
+                      </div>
+                      <ArrowUpRight className="h-5 w-5 text-muted-foreground transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      {p.body}
+                    </p>
+                    <div className="mt-5 inline-flex rounded-md border border-border/60 bg-background/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">
+                      {p.tag}
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+            {filteredProjects.length === 0 && (
+              <div className="rounded-xl border border-dashed border-border/60 p-8 text-center text-sm text-muted-foreground">
+                No projects match that filter yet.
+              </div>
+            )}
+          </Section>
+        </Reveal>
 
         {/* Blog preview */}
         <Section id="writing" label="05" title="From the blog">

@@ -280,9 +280,9 @@ function Portfolio() {
         </div>
       </header>
 
-      <main id="top" className="mx-auto max-w-6xl px-4 sm:px-6">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Hero */}
-        <section className="relative pt-14 pb-16 md:pt-32 md:pb-32">
+        <section id="top" className="relative scroll-mt-20 pt-14 pb-16 md:pt-32 md:pb-32">
           <div className="pointer-events-auto absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
             <HeroCanvas />
           </div>

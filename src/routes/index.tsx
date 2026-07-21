@@ -377,54 +377,56 @@ function Portfolio() {
         </section>
 
         {/* About */}
-        <Section id="about" label="01" title="About">
-          <div className="grid gap-10 md:grid-cols-3">
-            <div className="space-y-4 md:col-span-2 text-muted-foreground leading-relaxed">
-              <p>
-                I design and ship large-scale data platforms — the kind that
-                move billions of records a day, survive audits, and stay boring
-                to operate. Most of my career has been in{" "}
-                <span className="text-foreground">Spark, PySpark and Scala</span>{" "}
-                on Cloudera, AWS and Azure Databricks.
-              </p>
-              <p>
-                Right now I'm at JP Morgan Chase modernizing legacy ETL onto
-                Databricks with a Medallion lakehouse on AWS. Before that I
-                spent two years at Capgemini building an investment-banking
-                datamart for Barclays with AWS Glue, Step Functions and
-                Redshift.
-              </p>
-              <p>
-                I care about the un-glamorous parts: idempotent pipelines,
-                metadata-driven orchestration, honest reconciliation, and
-                pipelines that a tired on-call engineer can actually read at
-                3am.
-              </p>
-            </div>
-            <div className="rounded-xl border border-border/60 bg-card/40 p-6">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">
-                Domains
+        <Reveal>
+          <Section id="about" label="01" title="About">
+            <div className="grid gap-10 md:grid-cols-3">
+              <div className="space-y-4 md:col-span-2 text-muted-foreground leading-relaxed">
+                <p>
+                  I design and ship large-scale data platforms — the kind that
+                  move billions of records a day, survive audits, and stay boring
+                  to operate. Most of my career has been in{" "}
+                  <span className="text-foreground">Spark, PySpark and Scala</span>{" "}
+                  on Cloudera, AWS and Azure Databricks.
+                </p>
+                <p>
+                  Right now I'm at JP Morgan Chase modernizing legacy ETL onto
+                  Databricks with a Medallion lakehouse on AWS. Before that I
+                  spent two years at Capgemini building an investment-banking
+                  datamart for Barclays with AWS Glue, Step Functions and
+                  Redshift.
+                </p>
+                <p>
+                  I care about the un-glamorous parts: idempotent pipelines,
+                  metadata-driven orchestration, honest reconciliation, and
+                  pipelines that a tired on-call engineer can actually read at
+                  3am.
+                </p>
               </div>
-              <ul className="mt-4 space-y-2 text-sm">
-                {[
-                  "Banking & Capital Markets",
-                  "Insurance",
-                  "IoT & Streaming",
-                  "Aerospace / GIS",
-                ].map((d) => (
-                  <li key={d} className="flex items-center gap-2">
-                    <span className="h-1 w-1 rounded-full bg-primary" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">
-                Methodology
+              <div className="rounded-xl border border-border/60 bg-card/40 p-6">
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Domains
+                </div>
+                <ul className="mt-4 space-y-2 text-sm">
+                  {[
+                    "Banking & Capital Markets",
+                    "Insurance",
+                    "IoT & Streaming",
+                    "Aerospace / GIS",
+                  ].map((d) => (
+                    <li key={d} className="flex items-center gap-2">
+                      <span className="h-1 w-1 rounded-full bg-primary" />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 text-xs uppercase tracking-widest text-muted-foreground">
+                  Methodology
+                </div>
+                <p className="mt-2 text-sm">Agile · Scrum · Waterfall</p>
               </div>
-              <p className="mt-2 text-sm">Agile · Scrum · Waterfall</p>
             </div>
-          </div>
-        </Section>
+          </Section>
+        </Reveal>
 
         {/* Skills */}
         <Section id="skills" label="02" title="Skills & Toolkit">

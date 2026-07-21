@@ -185,6 +185,14 @@ function Portfolio() {
     [filter],
   );
 
+  const sectionIds = useMemo(
+    () => NAV.filter((n) => !n.route).map((n) => n.href.replace("#", "")),
+    [],
+  );
+  const activeId = useActiveSection(sectionIds);
+
+  const isActive = (href: string) => activeId === href.replace("#", "");
+
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <CommandPalette />

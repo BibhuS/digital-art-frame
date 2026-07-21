@@ -242,21 +242,24 @@ function Portfolio() {
                 });
                 document.dispatchEvent(ev);
               }}
-              className="hidden items-center gap-1.5 rounded-md border border-border bg-background/40 px-2.5 py-1.5 text-xs text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:inline-flex"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-background/40 text-muted-foreground transition hover:border-primary/40 hover:text-foreground sm:inline-flex sm:h-auto sm:w-auto sm:gap-1.5 sm:px-2.5 sm:py-1.5"
               aria-label="Open command palette"
             >
               <CommandIcon className="h-3.5 w-3.5" />
-              <span className="font-mono">⌘K</span>
+              <span className="hidden font-mono text-xs sm:inline">⌘K</span>
             </button>
-            <ThemeToggle />
+            <div className="hidden sm:block">
+              <ThemeToggle />
+            </div>
             <a
               href={resumeAsset.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20"
+              className="hidden items-center gap-1.5 rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary transition hover:bg-primary/20 sm:inline-flex"
             >
               <Download className="h-3.5 w-3.5" /> Resume
             </a>
+            <MobileNav />
           </div>
         </div>
       </header>

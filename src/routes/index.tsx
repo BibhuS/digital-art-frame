@@ -357,13 +357,15 @@ function Portfolio() {
           {/* Stat strip */}
           <div className="mt-16 grid grid-cols-2 gap-4 border-t border-border/60 pt-8 sm:grid-cols-4">
             {[
-              ["13+", "Years in data"],
-              ["9+", "Years in cloud"],
-              ["6", "Enterprise clients"],
-              ["4", "Industry domains"],
-            ].map(([n, label]) => (
+              [13, "+", "Years in data"],
+              [9, "+", "Years in cloud"],
+              [6, "", "Enterprise clients"],
+              [4, "", "Industry domains"],
+            ].map(([n, suffix, label]) => (
               <div key={label}>
-                <div className="text-3xl font-semibold text-foreground">{n}</div>
+                <div className="text-3xl font-semibold text-foreground">
+                  <AnimatedCounter value={n as number} suffix={suffix} />
+                </div>
                 <div className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
                   {label}
                 </div>

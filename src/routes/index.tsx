@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useActiveSection } from "@/hooks/use-active-section";
 import {
   ArrowUpRight,
   Command as CommandIcon,
@@ -184,6 +185,14 @@ function Portfolio() {
     [filter],
   );
 
+  const sectionIds = useMemo(
+    () => NAV.filter((n) => !n.route).map((n) => n.href.replace("#", "")),
+    [],
+  );
+  const activeId = useActiveSection(sectionIds);
+
+  const isActive = (href: string) => activeId === href.replace("#", "");
+
   return (
     <div className="min-h-screen bg-background text-foreground antialiased">
       <CommandPalette />
@@ -209,13 +218,13 @@ function Portfolio() {
               Bibhu Bhushan Sinha
             </span>
           </a>
-          <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
+          <nav className="hidden gap-8 text-sm md:flex">
             {NAV.map((n) =>
               n.route ? (
                 <Link
                   key={n.href}
                   to={n.href}
-                  className="transition-colors hover:text-foreground"
+                  className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {n.label}
                 </Link>
@@ -223,8 +232,15 @@ function Portfolio() {
                 <a
                   key={n.href}
                   href={n.href}
-                  className="transition-colors hover:text-foreground"
+                  className={`relative transition-colors hover:text-foreground ${
+                    isActive(n.href)
+                      ? "font-medium text-primary"
+                      : "text-muted-foreground"
+                  }`}
                 >
+                  {isActive(n.href) && (
+                    <span className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
+                  )}
                   {n.label}
                 </a>
               ),
@@ -259,14 +275,14 @@ function Portfolio() {
             >
               <Download className="h-3.5 w-3.5" /> Resume
             </a>
-            <MobileNav />
+            <MobileNav activeId={activeId} />
           </div>
         </div>
       </header>
 
-      <main id="top" className="mx-auto max-w-6xl px-4 sm:px-6">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6">
         {/* Hero */}
-        <section className="relative pt-14 pb-16 md:pt-32 md:pb-32">
+        <section id="top" className="relative scroll-mt-20 pt-14 pb-16 md:pt-32 md:pb-32">
           <div className="pointer-events-auto absolute inset-0 -z-10 opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
             <HeroCanvas />
           </div>

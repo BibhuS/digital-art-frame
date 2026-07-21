@@ -31,7 +31,7 @@ function openCommandPalette() {
   document.dispatchEvent(ev);
 }
 
-export function MobileNav() {
+export function MobileNav({ activeId }: { activeId: string }) {
   const [open, setOpen] = useState(false);
 
   const handleAnchor = (href: string) => {
@@ -61,13 +61,16 @@ export function MobileNav() {
         </SheetHeader>
 
         <nav className="mt-8 flex flex-col gap-1">
-          {NAV.map((n) =>
-            n.route ? (
+          {NAV.map((n) => {
+            const active = activeId === n.href.replace("#", "");
+            return n.route ? (
               <Link
                 key={n.href}
                 to={n.href}
                 onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2.5 text-sm text-foreground transition hover:bg-primary/10 hover:text-primary"
+                className={`rounded-md px-3 py-2.5 text-sm transition hover:bg-primary/10 hover:text-primary ${
+                  active ? "bg-primary/10 font-medium text-primary" : "text-foreground"
+                }`}
               >
                 {n.label}
               </Link>
@@ -79,12 +82,14 @@ export function MobileNav() {
                   e.preventDefault();
                   handleAnchor(n.href);
                 }}
-                className="rounded-md px-3 py-2.5 text-sm text-foreground transition hover:bg-primary/10 hover:text-primary"
+                className={`rounded-md px-3 py-2.5 text-sm transition hover:bg-primary/10 hover:text-primary ${
+                  active ? "bg-primary/10 font-medium text-primary" : "text-foreground"
+                }`}
               >
                 {n.label}
               </a>
-            )
-          )}
+            );
+          })}
         </nav>
 
         <div className="mt-6 flex flex-col gap-2 border-t border-border/60 pt-6">

@@ -1,35 +1,19 @@
-Current state: the portfolio has a strong hero, command palette, theme toggle, blog, and project detail pages. The next layer of polish is around navigation, motion, discoverability, and SEO.
+## Motion Presets for Hero 3D Globe
 
-Planned improvements:
+Add three quick-select preset buttons to the hero control panel that set both animation speed and particle intensity in one tap.
 
-1. Scroll-reveal animations
-   - Wrap each major section in a reusable `<Reveal>` component that fades/slides up as it enters the viewport.
-   - Use Intersection Observer with `prefers-reduced-motion` respect.
+### Presets
+- **Calm** — speed 0.4x, particles off (or low density), gentle rotation
+- **Balanced** — speed 1.0x, particles on (default density) — default on load
+- **Dynamic** — speed 2.2x, particles on (higher density), lively rotation
 
-2. Animated stat counters in the hero
-   - Turn "13+", "9+", "6", "4" into counting-up numbers on first view.
-   - Keep the current stat strip layout; only add motion.
+### Changes (single file: `src/components/hero-canvas.tsx`)
+1. Add a `preset` state (`"calm" | "balanced" | "dynamic"`) plus a `particleIntensity` state (low/medium/high) that scales particle count/opacity in the Three.js scene.
+2. Render a compact preset row inside the existing control panel (above the speed slider): three pill buttons highlighting the active preset.
+3. Clicking a preset updates speed + particles-on + intensity together. Manually adjusting the speed slider or toggling particles switches the active preset chip to "Custom".
+4. Restyle the panel slightly so presets + manual controls read as two groups; keep it collapsed-friendly on mobile (wrap to two rows).
 
-3. Back-to-top button
-   - Appears after scrolling past the hero.
-   - Smooth-scrolls to `#top`.
-
-4. Mobile navigation drawer
-   - Replace the hidden desktop-only nav on small screens with a hamburger menu + slide-out drawer.
-   - Include all nav links + the ⌘K trigger and theme toggle.
-
-5. SEO `head()` for blog and project routes
-   - Add unique titles, descriptions, Open Graph tags, and canonical paths to `/blog`, `/blog/:slug`, and `/projects/:slug`.
-   - Blog posts use the post title + excerpt; projects use title + body.
-
-6. Site footer
-   - Add a footer with sitemap links, social links, copyright, and a "built with" credit.
-   - Keeps the single-page feel while improving crawlability and professionalism.
-
-7. Theme-toggle attribute fix
-   - Add `data-theme-toggle` so the toggle is programmatically detectable and consistent with other interactive elements.
-
-8. Visible command-palette trigger on mobile
-   - Show a search icon in the mobile header that opens the palette.
-
-No new dependencies are required. All changes stay within existing components and routes.
+### Notes
+- Purely presentational; no data or routing changes.
+- Uses existing tokens (primary/accent) for the active pill — no new colors.
+- No new dependencies.

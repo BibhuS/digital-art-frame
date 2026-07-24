@@ -1,6 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { Eye, EyeOff, Sparkles, Gauge } from "lucide-react";
+import { Eye, EyeOff, Sparkles, Gauge, Wind, Waves, Zap } from "lucide-react";
+
+type PresetId = "calm" | "balanced" | "dynamic";
+type PresetDef = {
+  id: PresetId;
+  label: string;
+  icon: typeof Wind;
+  speed: number;
+  particles: boolean;
+  intensity: number; // 0.5 low → 1.6 high
+};
+const PRESETS: PresetDef[] = [
+  { id: "calm", label: "Calm", icon: Wind, speed: 0.4, particles: false, intensity: 0.6 },
+  { id: "balanced", label: "Balanced", icon: Waves, speed: 1, particles: true, intensity: 1 },
+  { id: "dynamic", label: "Dynamic", icon: Zap, speed: 2.2, particles: true, intensity: 1.6 },
+];
 
 /**
  * Interactive 3D globe made of glowing points, wrapped in a drifting
@@ -13,14 +28,28 @@ export function HeroCanvas() {
   const [enabled, setEnabled] = useState(true);
   const [particles, setParticles] = useState(true);
   const [speed, setSpeed] = useState(1);
+  const [intensity, setIntensity] = useState(1);
+  const [preset, setPreset] = useState<PresetId | "custom">("balanced");
   const speedRef = useRef(speed);
   const particlesRef = useRef(particles);
+  const intensityRef = useRef(intensity);
   useEffect(() => {
     speedRef.current = speed;
   }, [speed]);
   useEffect(() => {
     particlesRef.current = particles;
   }, [particles]);
+  useEffect(() => {
+    intensityRef.current = intensity;
+  }, [intensity]);
+
+  function applyPreset(id: PresetId) {
+    const p = PRESETS.find((x) => x.id === id)!;
+    setSpeed(p.speed);
+    setParticles(p.particles);
+    setIntensity(p.intensity);
+    setPreset(id);
+  }
 
   useEffect(() => {
     if (!enabled) return;
@@ -105,6 +134,9 @@ export function HeroCanvas() {
       }),
     );
     scene.add(field);
+    const fieldMat = field.material as THREE.PointsMaterial;
+    const FIELD_BASE_OPACITY = 0.6;
+    const FIELD_BASE_SIZE = 0.02;
 
     // ----- Interaction -----
     const rot = { x: 0.2, y: 0, vx: 0, vy: 0.003 };
@@ -178,7 +210,10 @@ export function HeroCanvas() {
       glow.rotation.copy(globe.rotation);
       field.visible = particlesRef.current;
       if (particlesRef.current) {
-        field.rotation.y += reduced ? 0 : 0.0004 * s;
+        const it = intensityRef.current;
+        field.rotation.y += reduced ? 0 : 0.0004 * s * it;
+        fieldMat.opacity = FIELD_BASE_OPACITY * it;
+        fieldMat.size = FIELD_BASE_SIZE * (0.75 + 0.5 * it);
       }
       // scale auto-spin contribution for next frame
       rot.vy += reduced ? 0 : 0.0025 * 0.06 * (s - 1);
@@ -219,6 +254,31 @@ export function HeroCanvas() {
         />
       )}
       <div className="pointer-events-auto absolute right-3 top-3 z-10 flex flex-col gap-2 rounded-lg border border-border/60 bg-background/70 p-2 text-xs backdrop-blur-md">
+        <div className="flex items-center gap-1" role="group" aria-label="Motion presets">
+          {PRESETS.map((p) => {
+            const Icon = p.icon;
+            const active = preset === p.id;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => applyPreset(p.id)}
+                disabled={!enabled}
+                aria-pressed={active}
+                title={`${p.label} preset`}
+                className={`inline-flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1 transition disabled:opacity-40 ${
+                  active
+                    ? "border-primary/60 bg-primary/15 text-foreground"
+                    : "border-transparent text-muted-foreground hover:bg-primary/10 hover:text-foreground"
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5" />
+                <span>{p.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div className="h-px w-full bg-border/60" />
         <button
           type="button"
           onClick={() => setEnabled((v) => !v)}
@@ -231,7 +291,10 @@ export function HeroCanvas() {
         </button>
         <button
           type="button"
-          onClick={() => setParticles((v) => !v)}
+          onClick={() => {
+            setParticles((v) => !v);
+            setPreset("custom");
+          }}
           disabled={!enabled}
           className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-muted-foreground transition hover:bg-primary/10 hover:text-foreground disabled:opacity-40"
           aria-label={particles ? "Disable particles" : "Enable particles"}
@@ -249,7 +312,10 @@ export function HeroCanvas() {
             step={0.1}
             value={speed}
             disabled={!enabled}
-            onChange={(e) => setSpeed(parseFloat(e.target.value))}
+            onChange={(e) => {
+              setSpeed(parseFloat(e.target.value));
+              setPreset("custom");
+            }}
             className="h-1 w-20 cursor-pointer accent-primary disabled:opacity-40"
             aria-label="Animation speed"
           />

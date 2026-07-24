@@ -10,6 +10,12 @@ export type Project = {
   highlights: string[];
   stack: string[];
   outcome: string[];
+  caseStudy?: {
+    problem: string;
+    approach: string[];
+    contribution: string[];
+    metrics: { label: string; value: string }[];
+  };
 };
 
 export const PROJECTS: Project[] = [
@@ -32,6 +38,28 @@ export const PROJECTS: Project[] = [
       "Pipeline SLA breaches down 80% quarter-over-quarter",
       "Onboarding data available to analysts in T+1 instead of T+3",
     ],
+    caseStudy: {
+      problem:
+        "Client-onboarding analytics ran on a decade-old on-prem ETL stack that couldn't meet compliance requirements for restricted geographies, was breaching SLA multiple times a week, and blocked analysts on T+3 data. A full lift-and-shift wasn't viable — the source systems, PI-masking rules and downstream consumers all had to stay live during migration.",
+      approach: [
+        "Modelled the platform on the Medallion pattern — Bronze (raw, append-only), Silver (conformed + PI-masked), Gold (analyst-facing marts) — with clear owners per layer.",
+        "Built a hybrid ingestion path: Apache NiFi handled restricted-country masking at the edge before data ever touched the lake; Databricks pipelines picked up everything else.",
+        "Wrote a Python reconciliation framework that runs after every batch, comparing row counts and primary-key sets across source → Bronze → Silver and posting a red/green signal to the team channel.",
+        "Cut over 60+ legacy workflows one domain at a time with dual-run windows and automated diffs so business users never saw a gap.",
+      ],
+      contribution: [
+        "Owned the target architecture and the migration playbook end-to-end.",
+        "Wrote the reusable PySpark + Delta MERGE templates that every workflow now uses.",
+        "Designed the PI-masking contract between NiFi and Databricks and enforced it in CI.",
+        "Ran the on-call rotation during the cutover and instrumented alerting for every Silver table.",
+      ],
+      metrics: [
+        { label: "Legacy workflows migrated", value: "60+" },
+        { label: "SLA breaches (QoQ)", value: "-80%" },
+        { label: "Freshness for analysts", value: "T+3 → T+1" },
+        { label: "Cutover downtime", value: "0 min" },
+      ],
+    },
   },
   {
     slug: "investment-banking-datamart",
@@ -52,6 +80,28 @@ export const PROJECTS: Project[] = [
       "20+ IB datasets landed into Redshift powering trader-facing dashboards",
       "New source onboarding time reduced from weeks to hours",
     ],
+    caseStudy: {
+      problem:
+        "The IB desk needed dozens of new datasets in Redshift on a rolling basis, but every new source meant hand-coded Glue jobs, bespoke Step Function state machines and no shared retry / idempotency story. Onboarding a source was a multi-week project, and failed jobs left the datamart in inconsistent states that traders felt the next morning.",
+      approach: [
+        "Built a metadata-driven Glue + PySpark framework where a new source is a config row, not a new codebase — schema, partitioning, load type and target mart are all declarative.",
+        "Wrapped everything in Step Functions with a DynamoDB job registry so retries and downstream triggers key off idempotent job IDs instead of clock-based schedules.",
+        "Automated ingestion via S3 events → Lambda → EventBridge with checksum validation and auto-unzip, so external teams just drop files and the pipeline takes over.",
+        "Provisioned everything through CloudFormation / Terraform so every environment (dev, UAT, prod) was byte-identical and reviewable in Git.",
+      ],
+      contribution: [
+        "Designed the metadata contract and the Step Functions template every workflow inherits from.",
+        "Wrote the DynamoDB job registry and the retry / dead-letter semantics.",
+        "Migrated the first five business-critical datasets myself to prove the pattern, then coached two engineers to onboard the rest.",
+        "Partnered with the trading desk to define SLAs and wired CloudWatch alerts to their on-call channel.",
+      ],
+      metrics: [
+        { label: "IB datasets in Redshift", value: "20+" },
+        { label: "Source onboarding time", value: "weeks → hours" },
+        { label: "Manual retries per week", value: "→ 0" },
+        { label: "Infra drift incidents", value: "eliminated" },
+      ],
+    },
   },
   {
     slug: "insurance-lakehouse-databricks",
@@ -211,3 +261,41 @@ export const SOCIAL = {
 
 // Served from /public so it works on GitHub Pages (subpath) and Lovable preview.
 export const RESUME_URL = `${import.meta.env.BASE_URL}Bibhu_Bhushan_Sinha_Resume.pdf`;
+
+export const SITE_URL = "https://portfolio-bibhu-data.lovable.app";
+export const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+  initials: string;
+};
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote:
+      "Bibhu owned our Databricks migration end-to-end. The reconciliation framework he built has quietly saved us from at least three would-be incidents. He's the person you want writing the pattern the rest of the team copies.",
+    name: "Engineering Manager",
+    role: "Data Platform Lead",
+    company: "JP Morgan Chase",
+    initials: "EM",
+  },
+  {
+    quote:
+      "Metadata-driven pipelines sound great on a whiteboard — Bibhu actually shipped one. Onboarding a new source went from a two-week project to a config PR. Rare mix of deep Spark chops and pragmatic delivery.",
+    name: "Senior Consultant",
+    role: "Cloud Data Architect",
+    company: "Barclays engagement",
+    initials: "SC",
+  },
+  {
+    quote:
+      "Calm under production pressure, thoughtful in design reviews, generous with reviews and mentoring. If Bibhu says a pipeline is ready, it's ready.",
+    name: "Tech Lead",
+    role: "Streaming & Analytics",
+    company: "MITIE Mozaic",
+    initials: "TL",
+  },
+];

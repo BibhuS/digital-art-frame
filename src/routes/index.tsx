@@ -637,6 +637,44 @@ function Portfolio() {
           </Section>
         </Reveal>
 
+        {/* Testimonials */}
+        <Reveal delay={80}>
+          <Section id="testimonials" title="What people say">
+            <div className="grid gap-5 md:grid-cols-3">
+              {TESTIMONIALS.map((t, idx) => (
+                <Reveal key={t.name + idx} delay={idx * 80}>
+                  <figure className="flex h-full flex-col rounded-xl border border-border/60 bg-card/40 p-6">
+                    <svg
+                      aria-hidden
+                      className="h-6 w-6 text-primary/70"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M7.17 6A5.17 5.17 0 002 11.17V18h6.83v-6.83H5.5A1.67 1.67 0 017.17 9.5V6zm10 0a5.17 5.17 0 00-5.17 5.17V18h6.83v-6.83H15.5a1.67 1.67 0 011.67-1.67V6z" />
+                    </svg>
+                    <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-foreground/90">
+                      "{t.quote}"
+                    </blockquote>
+                    <figcaption className="mt-6 flex items-center gap-3 border-t border-border/60 pt-4">
+                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-gradient-to-br from-primary/20 to-accent/20 font-mono text-xs text-foreground">
+                        {t.initials}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        <span className="block font-medium text-foreground">
+                          {t.name}
+                        </span>
+                        <span>
+                          {t.role} · {t.company}
+                        </span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+          </Section>
+        </Reveal>
+
         {/* Contact */}
         <Reveal delay={80}>
           <Section id="contact" title="Get in touch">

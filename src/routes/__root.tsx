@@ -91,13 +91,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "13+ years engineering Spark, Databricks & cloud data pipelines across banking, insurance and IoT.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:site_name", content: "Bibhu Bhushan Sinha" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "alternate", type: "application/rss+xml", title: "Bibhu Bhushan Sinha — Blog", href: "/rss.xml" },
       
     ],
   }),

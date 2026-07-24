@@ -18,6 +18,8 @@ export const Route = createFileRoute("/projects/$slug")({
           { property: "og:description", content: loaderData.project.body },
           { property: "og:type", content: "article" },
           { property: "og:url", content: `/projects/${params.slug}` },
+          { property: "og:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
+          { name: "twitter:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
         ]
       : [{ title: "Project not found" }, { name: "robots", content: "noindex" }],
     links: loaderData
@@ -93,6 +95,62 @@ function ProjectPage() {
             ))}
           </ul>
         </section>
+
+        {project.caseStudy && (
+          <>
+            <section className="mt-14">
+              <h2 className="text-2xl font-semibold tracking-tight">The problem</h2>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                {project.caseStudy.problem}
+              </p>
+            </section>
+
+            <section className="mt-12">
+              <h2 className="text-2xl font-semibold tracking-tight">Approach</h2>
+              <ol className="mt-4 space-y-3">
+                {project.caseStudy.approach.map((a, i) => (
+                  <li key={i} className="flex gap-3 text-muted-foreground">
+                    <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-border/60 bg-card/40 font-mono text-xs text-primary">
+                      {i + 1}
+                    </span>
+                    <span className="leading-relaxed">{a}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section className="mt-12">
+              <h2 className="text-2xl font-semibold tracking-tight">My contribution</h2>
+              <ul className="mt-4 space-y-3">
+                {project.caseStudy.contribution.map((c, i) => (
+                  <li key={i} className="flex gap-3 text-muted-foreground">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-primary" />
+                    <span className="leading-relaxed">{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="mt-12">
+              <h2 className="text-2xl font-semibold tracking-tight">Impact</h2>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {project.caseStudy.metrics.map((m) => (
+                  <div
+                    key={m.label}
+                    className="rounded-xl border border-border/60 bg-gradient-to-br from-card/60 to-card/20 p-4"
+                  >
+                    <div className="text-2xl font-semibold tracking-tight text-primary">
+                      {m.value}
+                    </div>
+                    <div className="mt-1 text-xs uppercase tracking-widest text-muted-foreground">
+                      {m.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
         <section className="mt-12">
           <h2 className="text-2xl font-semibold tracking-tight">Tech stack</h2>

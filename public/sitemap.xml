@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://portfolio-bibhu-data.lovable.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/blog/medallion-in-real-life</loc><lastmod>2026-05-12</lastmod><priority>0.7</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/blog/step-functions-vs-airflow</loc><lastmod>2026-03-04</lastmod><priority>0.7</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/blog/pyspark-performance-checklist</loc><lastmod>2026-01-22</lastmod><priority>0.7</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/projects/oskar-client-onboarding</loc><priority>0.8</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/projects/investment-banking-datamart</loc><priority>0.8</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/projects/insurance-lakehouse-databricks</loc><priority>0.6</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/projects/iot-streaming-platform</loc><priority>0.6</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/projects/airline-realtime-pipeline</loc><priority>0.6</priority></url>
+  <url><loc>https://portfolio-bibhu-data.lovable.app/projects/transactional-text-analytics</loc><priority>0.6</priority></url>
+</urlset>

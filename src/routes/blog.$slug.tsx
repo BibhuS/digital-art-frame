@@ -20,6 +20,8 @@ export const Route = createFileRoute("/blog/$slug")({
           { property: "og:description", content: loaderData.post.excerpt },
           { property: "og:type", content: "article" },
           { property: "og:url", content: `/blog/${params.slug}` },
+          { property: "og:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
+          { name: "twitter:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
         ]
       : [{ title: "Post not found" }, { name: "robots", content: "noindex" }],
     links: loaderData

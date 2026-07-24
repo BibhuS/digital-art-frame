@@ -24,6 +24,8 @@ import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { GitHubStats } from "@/components/github-stats";
 import { Magnetic } from "@/components/magnetic";
+import { ContactForm } from "@/components/contact-form";
+import { AiAssistant } from "@/components/ai-assistant";
 import {
   BLOG_POSTS,
   PROJECTS,
@@ -628,7 +630,14 @@ function Portfolio() {
                 Happy to chat about Spark, Databricks, lakehouses, streaming, or
                 your next data platform.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 grid gap-8 md:grid-cols-2">
+                <div>
+                  <ContactForm />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Prefer another channel?
+                  </p>
                 <a
                   href={`mailto:${SOCIAL.email}`}
                   className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
@@ -643,6 +652,7 @@ function Portfolio() {
                 >
                   <Download className="h-4 w-4" /> Resume (PDF)
                 </a>
+                </div>
               </div>
               <div className="mt-10 flex flex-wrap gap-6 border-t border-border/60 pt-6 text-sm text-muted-foreground">
                 <a
@@ -681,6 +691,7 @@ function Portfolio() {
         <SiteFooter />
       </main>
       <BackToTop />
+      <AiAssistant />
     </div>
   );
 }

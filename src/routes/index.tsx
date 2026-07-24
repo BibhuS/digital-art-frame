@@ -584,6 +584,16 @@ function Portfolio() {
 
         {/* Blog preview */}
         <Reveal delay={80}>
+          <Section id="playground" title="Architecture Playground">
+            <p className="mb-6 max-w-2xl text-sm text-muted-foreground">
+              Interactive reference architectures I build in the wild. Switch
+              presets, drag nodes, and watch data flow end-to-end.
+            </p>
+            <ArchitecturePlayground />
+          </Section>
+        </Reveal>
+
+        <Reveal delay={80}>
           <Section id="writing" title="From the blog">
             <div className="grid gap-5 md:grid-cols-3">
               {BLOG_POSTS.map((p, idx) => (

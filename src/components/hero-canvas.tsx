@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { Eye, EyeOff, Sparkles, Gauge } from "lucide-react";
 
 /**
  * Interactive 3D globe made of glowing points, wrapped in a drifting
@@ -9,8 +10,20 @@ import * as THREE from "three";
  */
 export function HeroCanvas() {
   const mountRef = useRef<HTMLDivElement | null>(null);
+  const [enabled, setEnabled] = useState(true);
+  const [particles, setParticles] = useState(true);
+  const [speed, setSpeed] = useState(1);
+  const speedRef = useRef(speed);
+  const particlesRef = useRef(particles);
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
+  useEffect(() => {
+    particlesRef.current = particles;
+  }, [particles]);
 
   useEffect(() => {
+    if (!enabled) return;
     const mount = mountRef.current;
     if (!mount) return;
 
@@ -158,11 +171,17 @@ export function HeroCanvas() {
         // gentle parallax toward pointer
         rot.x += (pointer.y * 0.25 - rot.x) * 0.01;
       }
+      const s = speedRef.current;
       globe.rotation.y = rot.y;
       globe.rotation.x = rot.x;
       wire.rotation.copy(globe.rotation);
       glow.rotation.copy(globe.rotation);
-      field.rotation.y += reduced ? 0 : 0.0004;
+      field.visible = particlesRef.current;
+      if (particlesRef.current) {
+        field.rotation.y += reduced ? 0 : 0.0004 * s;
+      }
+      // scale auto-spin contribution for next frame
+      rot.vy += reduced ? 0 : 0.0025 * 0.06 * (s - 1);
 
       renderer.render(scene, camera);
       raf = requestAnimationFrame(frame);
@@ -188,13 +207,55 @@ export function HeroCanvas() {
         mount.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [enabled]);
 
   return (
-    <div
-      ref={mountRef}
-      aria-hidden
-      className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
-    />
+    <>
+      {enabled && (
+        <div
+          ref={mountRef}
+          aria-hidden
+          className="absolute inset-0 h-full w-full cursor-grab active:cursor-grabbing"
+        />
+      )}
+      <div className="pointer-events-auto absolute right-3 top-3 z-10 flex flex-col gap-2 rounded-lg border border-border/60 bg-background/70 p-2 text-xs backdrop-blur-md">
+        <button
+          type="button"
+          onClick={() => setEnabled((v) => !v)}
+          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-muted-foreground transition hover:bg-primary/10 hover:text-foreground"
+          aria-label={enabled ? "Hide 3D globe" : "Show 3D globe"}
+          title={enabled ? "Hide 3D globe" : "Show 3D globe"}
+        >
+          {enabled ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+          <span>Globe</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setParticles((v) => !v)}
+          disabled={!enabled}
+          className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-muted-foreground transition hover:bg-primary/10 hover:text-foreground disabled:opacity-40"
+          aria-label={particles ? "Disable particles" : "Enable particles"}
+          title={particles ? "Disable particles" : "Enable particles"}
+        >
+          <Sparkles className={`h-3.5 w-3.5 ${particles ? "text-primary" : ""}`} />
+          <span>Particles</span>
+        </button>
+        <label className="flex items-center gap-1.5 px-2 py-1 text-muted-foreground">
+          <Gauge className="h-3.5 w-3.5" />
+          <input
+            type="range"
+            min={0}
+            max={3}
+            step={0.1}
+            value={speed}
+            disabled={!enabled}
+            onChange={(e) => setSpeed(parseFloat(e.target.value))}
+            className="h-1 w-20 cursor-pointer accent-primary disabled:opacity-40"
+            aria-label="Animation speed"
+          />
+          <span className="w-6 tabular-nums text-[10px]">{speed.toFixed(1)}x</span>
+        </label>
+      </div>
+    </>
   );
 }

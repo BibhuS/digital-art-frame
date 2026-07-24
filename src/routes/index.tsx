@@ -22,6 +22,8 @@ import { AnimatedCounter } from "@/components/animated-counter";
 import { BackToTop } from "@/components/back-to-top";
 import { MobileNav } from "@/components/mobile-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { GitHubStats } from "@/components/github-stats";
+import { Magnetic } from "@/components/magnetic";
 import {
   BLOG_POSTS,
   PROJECTS,
@@ -332,18 +334,22 @@ function Portfolio() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/40"
-            >
-              View My Work <ArrowUpRight className="h-4 w-4" />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
-            >
-              Get in Touch
-            </a>
+            <Magnetic>
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/20 transition hover:shadow-primary/40"
+              >
+                View My Work <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 rounded-md border border-border bg-card/50 px-5 py-2.5 text-sm font-medium text-foreground transition hover:border-primary/40 hover:bg-card"
+              >
+                Get in Touch
+              </a>
+            </Magnetic>
             <a
               href={RESUME_URL}
               target="_blank"
@@ -517,6 +523,7 @@ function Portfolio() {
         {/* Projects */}
         <Reveal delay={80}>
           <Section id="projects" title="Selected Projects">
+            <GitHubStats />
             <div className="mb-8 flex flex-wrap gap-2">
               {PROJECT_TECH_FILTERS.map((t) => (
                 <button

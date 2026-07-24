@@ -202,6 +202,7 @@ export type BlogPost = {
   title: string;
   excerpt: string;
   tag: string;
+  tags: string[];
   date: string;
   readingMinutes: number;
   body: string; // simple markdown-ish paragraphs separated by \n\n; ## headings supported
@@ -214,6 +215,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Bronze/Silver/Gold is a poster on the wall until you're on-call at 2am. Here's how I actually structure Databricks layers, ownership, and retries in production.",
     tag: "Databricks",
+    tags: ["Databricks", "Lakehouse", "Delta Lake", "Architecture", "On-Call"],
     date: "2026-05-12",
     readingMinutes: 7,
     body:
@@ -225,6 +227,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Two orchestrators, two very different philosophies. When I reach for AWS Step Functions, when I reach for Airflow, and the honest trade-offs.",
     tag: "AWS",
+    tags: ["AWS", "Step Functions", "Airflow", "Orchestration", "Architecture"],
     date: "2026-03-04",
     readingMinutes: 6,
     body:
@@ -236,6 +239,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Skew, shuffles, broadcasts, AQE — the five things I check before touching cluster size when a PySpark job is slow.",
     tag: "PySpark",
+    tags: ["PySpark", "Spark", "Performance", "AQE"],
     date: "2026-01-22",
     readingMinutes: 5,
     body:

@@ -171,12 +171,7 @@ export function HeroCanvas() {
         // gentle parallax toward pointer
         rot.x += (pointer.y * 0.25 - rot.x) * 0.01;
       }
-      globe.rotation.y = rot.y;
-      globe.rotation.x = rot.x;
-      wire.rotation.copy(globe.rotation);
-      glow.rotation.copy(globe.rotation);
       const s = speedRef.current;
-      // apply speed scaling to rotational deltas via time-based tweak
       globe.rotation.y = rot.y;
       globe.rotation.x = rot.x;
       wire.rotation.copy(globe.rotation);
@@ -185,7 +180,7 @@ export function HeroCanvas() {
       if (particlesRef.current) {
         field.rotation.y += reduced ? 0 : 0.0004 * s;
       }
-      // scale auto-spin contribution next frame
+      // scale auto-spin contribution for next frame
       rot.vy += reduced ? 0 : 0.0025 * 0.06 * (s - 1);
 
       renderer.render(scene, camera);

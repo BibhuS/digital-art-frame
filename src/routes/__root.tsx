@@ -106,6 +106,50 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "alternate", type: "application/rss+xml", title: "Bibhu Bhushan Sinha — Blog", href: "/rss.xml" },
       
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Person",
+              "@id": "https://portfolio-bibhu-data.lovable.app/#person",
+              name: "Bibhu Bhushan Sinha",
+              url: "https://portfolio-bibhu-data.lovable.app/",
+              image: "https://portfolio-bibhu-data.lovable.app/og-image.jpg",
+              jobTitle: "Senior Data Engineer",
+              description:
+                "Senior Data Engineer with 13+ years building Spark, Databricks and cloud data platforms across banking, insurance and IoT.",
+              email: "mailto:bibhuhadoop2016@gmail.com",
+              sameAs: [
+                "https://www.linkedin.com/in/bibhu-bhushan-sinha/",
+                "https://github.com/BibhuS",
+              ],
+              knowsAbout: [
+                "Data Engineering",
+                "Apache Spark",
+                "Databricks",
+                "AWS",
+                "Delta Lake",
+                "PySpark",
+                "Lakehouse Architecture",
+              ],
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://portfolio-bibhu-data.lovable.app/#website",
+              url: "https://portfolio-bibhu-data.lovable.app/",
+              name: "Bibhu Bhushan Sinha",
+              description:
+                "Portfolio of Bibhu Bhushan Sinha — Senior Data Engineer.",
+              publisher: { "@id": "https://portfolio-bibhu-data.lovable.app/#person" },
+              inLanguage: "en",
+            },
+          ],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

@@ -17,13 +17,37 @@ export const Route = createFileRoute("/projects/$slug")({
           { property: "og:title", content: loaderData.project.title },
           { property: "og:description", content: loaderData.project.body },
           { property: "og:type", content: "article" },
-          { property: "og:url", content: `/projects/${params.slug}` },
+          { property: "og:url", content: `https://portfolio-bibhu-data.lovable.app/projects/${params.slug}` },
           { property: "og:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
           { name: "twitter:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
         ]
       : [{ title: "Project not found" }, { name: "robots", content: "noindex" }],
     links: loaderData
-      ? [{ rel: "canonical", href: `/projects/${params.slug}` }]
+      ? [{ rel: "canonical", href: `https://portfolio-bibhu-data.lovable.app/projects/${params.slug}` }]
+      : [],
+    scripts: loaderData
+      ? [
+          {
+            type: "application/ld+json",
+            children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CreativeWork",
+              name: loaderData.project.title,
+              headline: loaderData.project.title,
+              description: loaderData.project.body,
+              keywords: loaderData.project.tech.join(", "),
+              inLanguage: "en",
+              image: "https://portfolio-bibhu-data.lovable.app/og-image.jpg",
+              url: `https://portfolio-bibhu-data.lovable.app/projects/${params.slug}`,
+              author: {
+                "@type": "Person",
+                "@id": "https://portfolio-bibhu-data.lovable.app/#person",
+                name: "Bibhu Bhushan Sinha",
+              },
+              about: loaderData.project.client,
+            }),
+          },
+        ]
       : [],
   }),
   component: ProjectPage,

@@ -19,13 +19,50 @@ export const Route = createFileRoute("/blog/$slug")({
           { property: "og:title", content: loaderData.post.title },
           { property: "og:description", content: loaderData.post.excerpt },
           { property: "og:type", content: "article" },
-          { property: "og:url", content: `/blog/${params.slug}` },
+          { property: "og:url", content: `https://portfolio-bibhu-data.lovable.app/blog/${params.slug}` },
           { property: "og:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
           { name: "twitter:image", content: "https://portfolio-bibhu-data.lovable.app/og-image.jpg" },
+          { property: "article:published_time", content: loaderData.post.date },
+          { property: "article:author", content: "Bibhu Bhushan Sinha" },
+          { property: "article:section", content: loaderData.post.tag },
         ]
       : [{ title: "Post not found" }, { name: "robots", content: "noindex" }],
     links: loaderData
-      ? [{ rel: "canonical", href: `/blog/${params.slug}` }]
+      ? [{ rel: "canonical", href: `https://portfolio-bibhu-data.lovable.app/blog/${params.slug}` }]
+      : [],
+    scripts: loaderData
+      ? [
+          {
+            type: "application/ld+json",
+            children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: loaderData.post.title,
+              description: loaderData.post.excerpt,
+              datePublished: loaderData.post.date,
+              dateModified: loaderData.post.date,
+              articleSection: loaderData.post.tag,
+              wordCount: loaderData.post.readingMinutes * 200,
+              inLanguage: "en",
+              image: "https://portfolio-bibhu-data.lovable.app/og-image.jpg",
+              author: {
+                "@type": "Person",
+                "@id": "https://portfolio-bibhu-data.lovable.app/#person",
+                name: "Bibhu Bhushan Sinha",
+                url: "https://portfolio-bibhu-data.lovable.app/",
+              },
+              publisher: {
+                "@type": "Person",
+                "@id": "https://portfolio-bibhu-data.lovable.app/#person",
+                name: "Bibhu Bhushan Sinha",
+              },
+              mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": `https://portfolio-bibhu-data.lovable.app/blog/${params.slug}`,
+              },
+            }),
+          },
+        ]
       : [],
   }),
   component: PostPage,

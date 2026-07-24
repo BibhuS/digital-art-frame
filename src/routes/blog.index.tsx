@@ -18,9 +18,9 @@ export const Route = createFileRoute("/blog/")({
         property: "og:description",
         content: "Notes on data engineering, Spark, Databricks and cloud lakehouses.",
       },
-      { property: "og:url", content: "/blog" },
+      { property: "og:url", content: "https://portfolio-bibhu-data.lovable.app/blog" },
     ],
-    links: [{ rel: "canonical", href: "/blog" }],
+    links: [{ rel: "canonical", href: "https://portfolio-bibhu-data.lovable.app/blog" }],
   }),
   component: BlogIndex,
 });
